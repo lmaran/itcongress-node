@@ -2,7 +2,7 @@
 
 var config = require('../config/environment');
 var nodemailer = require('nodemailer');
-var Mailgun = require('mailgun-js');
+//var Mailgun = require('mailgun-js');
 
 var factory = {};
 

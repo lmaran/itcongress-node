@@ -1,0 +1,47 @@
+<style>
+	.notMyOption {
+        text-decoration: line-through;
+        color: gray;
+	}	
+</style>
+
+{{> navbar}}
+
+<div class="container">
+    
+    {{#if menuHasDishes}}
+		<h1>Meniul de astazi<small class="text-muted"> ({{today}})</small></h1>
+		<hr>
+		
+        <ul class="list-group">
+            {{#each menu.dishes as |dish dishIndex|}}
+                <li class="list-group-item" data-category = "{{dish.category}}" data-option = "{{dish.option}}" style='border: 0 none;'>	
+                    {{#if option}}
+                        <strong>{{option}}.</strong>
+                    {{/if}}
+                    <span {{#if isNotMyOption}}class="notMyOption"{{/if}}>
+                        <span class="text-muted">{{name}}</span>{{#if isFasting}}<span> (post)</span>{{/if}}{{#if calories}}<span>, <span class="calories">{{calories}} cal.</span></span>{{/if}}                        
+                    </span>
+                    {{#if isMyOption}}
+                        </br>
+                        <span class="label label-success isMyOption">
+                            <span class="glyphicon glyphicon-ok"></span> Optiunea mea
+                        </span>
+                    {{/if}}
+                    
+                    <br/>
+                    <span class="text-muted">{{description}}</span>
+
+                </li>
+            {{/each}}
+        </ul>        
+        
+        
+	{{else}}
+		<h4> Pentru astazi <span class="text-muted">({{today}})</span> nu exista meniu!</h4>
+	{{/if}}
+
+    Vezi si <a href="/nextMenus">meniurile viitoare &raquo;</a>
+    <hr>
+
+</div>

@@ -2,6 +2,6 @@
   "name": "node-demo1",
   "version": "1.0.0",
   "scripts": {
-    "start": "node dist/server/app.js"
+    "start": "node server/app.js"
   }
 }

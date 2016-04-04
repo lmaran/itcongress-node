@@ -2,7 +2,7 @@
   "name": "NodejsAzureWeb1",
   "version": "0.0.0",
   "description": "NodejsAzureWeb1",
-  "main": "server.js",
+  "main": "server/app.js",
   "author": {
     "name": "lucian.maran",
     "email": ""

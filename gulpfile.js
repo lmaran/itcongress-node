@@ -63,7 +63,7 @@ gulp.task('prod', function(cb) {
         ['clean-dist', 'clean-css'],
         ['less', 'less-srv'],
         ['build-scripts', 'build-scripts-bower', 'build-styles', 'build-styles-bower'],
-        ['copy-server', 'copy-client', 'copy-bootstrap-fonts', 'copy-assets', 'copy-node-modules', 'create-buildInfo.json'],
+        ['copy-server', 'copy-client', 'copy-bootstrap-fonts', 'copy-assets', 'copy-node-modules', 'create-buildInfo.json', 'copy web.config'],
         'build-prod-html',
     cb);
 });
@@ -338,6 +338,11 @@ gulp.task('create-buildInfo.json', function () {
         '}';
     return file('buildInfo.json', str, { src: true })
         .pipe(gulp.dest('./dist'));
+});
+
+gulp.task('copy web.config', function () {
+    return gulp.src('./web.config')
+        .pipe(gulp.dest('./dist'));     
 });
 
 gulp.task('deploy', function() {

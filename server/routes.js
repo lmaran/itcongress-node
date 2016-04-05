@@ -74,7 +74,7 @@ module.exports = function(app) {
     app.get('/menus/:id/print', require('./api/menu/menuController').printById);
     
     // server-side views
-    app.get('/',function(req,res){res.render('home/home', {user: req.user});}); 
+    app.get('/',function(req,res){res.render('home/home', {user: req.user, env:process.env.NODE_ENV});}); 
     app.get('/contact', function(req,res){res.render('contact/contact', {user: req.user});});
     app.get('/login', function(req,res){res.render('user/login');});
     app.get('/register', function(req,res){res.render('user/register', {email: req.query.email});}); 

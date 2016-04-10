@@ -37,9 +37,9 @@ var all = {
         }
     },
     
-    mailgun: {
-        api_key: process.env.MAILGUN_KEY
-    },
+    // mailgun: {
+    //     api_key: process.env.MAILGUN_KEY
+    // },
     
     zoho: {
         user: process.env.ZOHO_USER,

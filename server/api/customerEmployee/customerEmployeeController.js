@@ -11,7 +11,7 @@ var emailService = require('../../data/emailService');
 exports.getAll = function (req, res) {
     var odataQuery = req.query;
     odataQuery.hasCountSegment = req.url.indexOf('/$count') !== -1 //check for $count as a url segment
-    if(!odataQuery.$top) odataQuery.$top = "1000"; // if $top is not specified, return max. 1000 records
+    if(!odataQuery.$top) odataQuery.$top = "4000"; // if $top is not specified, return max. 1000 records
         
     customerEmployeeService.getAll(odataQuery, function (err, customerEmployees) {
         if(err) { return handleError(res, err); }

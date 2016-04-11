@@ -43,6 +43,9 @@ exports.create = function (req, res, next) {
             var user = req.body;
             
             user.isActive = true;
+            if(user.status === 'WaitingForApproval')
+                user.isActive = false;
+
             user.provider = 'local';
             user.role = 'admin';
             user.createdBy = req.user.name;    
@@ -54,24 +57,24 @@ exports.create = function (req, res, next) {
                 if(err) { return handleError(res, err); }
                 res.status(201).json(response.ops[0]);
                 
-                // send an email with an activationLink
-                var from = user.email;
-                var subject = 'Activare cont';
+                // // send an email with an activationLink
+                // var from = user.email;
+                // var subject = 'Activare cont';
                 
-                var tpl = '';
-                    tpl += '<p style="margin-bottom:30px;">Buna <strong>' + user.name + '</strong>,</p>';
-                    tpl += user.createdBy + ' ti-a creat un cont de acces in aplicatie. ';
-                    tpl += 'Pentru activarea acestuia, te rog sa folosesti link-ul de mai jos:';
-                    tpl += '<p><a href="' + config.externalUrl + '/activate/' + user._id + '?activationToken=' + user.activationToken + '">Activare cont</a></p>';
-                    tpl += '<p style="margin-top:30px">Acest email a fost generat automat.</p>';
+                // var tpl = '';
+                //     tpl += '<p style="margin-bottom:30px;">Buna <strong>' + user.name + '</strong>,</p>';
+                //     tpl += user.createdBy + ' ti-a creat un cont de acces in aplicatie. ';
+                //     tpl += 'Pentru activarea acestuia, te rog sa folosesti link-ul de mai jos:';
+                //     tpl += '<p><a href="' + config.externalUrl + '/activate/' + user._id + '?activationToken=' + user.activationToken + '">Activare cont</a></p>';
+                //     tpl += '<p style="margin-top:30px">Acest email a fost generat automat.</p>';
         
-                    emailService.sendEmail(from, subject, tpl).then(function (result) {
-                        console.log(result);
-                        //res.status(201).json(response.ops[0]);
-                    }, function (err) {
-                        console.log(err);
-                        //handleError(res, err)
-                    });
+                //     emailService.sendEmail(from, subject, tpl).then(function (result) {
+                //         console.log(result);
+                //         //res.status(201).json(response.ops[0]);
+                //     }, function (err) {
+                //         console.log(err);
+                //         //handleError(res, err)
+                //     });
             });
             
         }
@@ -81,10 +84,10 @@ exports.create = function (req, res, next) {
 exports.createPublicUser = function (req, res, next) {
     var data = req.body;
     
-    customerEmployeeService.getByValue('email', data.email, null, function (err, customerEmployee) {
-        if(err) { return handleError(res, err); }
+    // customerEmployeeService.getByValue('email', data.email, null, function (err, customerEmployee) {
+    //     if(err) { return handleError(res, err); }
 
-        if(customerEmployee){
+    //     if(customerEmployee){
             
             var user = {};
             user.lastName = data.lastName;
@@ -103,33 +106,38 @@ exports.createPublicUser = function (req, res, next) {
             user.role = 'user';
                         
             user.isActive = true;
+            if(data.status === 'WaitingForApproval'){
+                user.status = data.status;
+                user.isActive = false;
+            }
+                
             user.createdBy = 'External user';    
-            user.createdOn = new Date();              
+            user.createdOn = new Date();           
             
             userService.create(user, function (err, response) {
                 if(err) { return handleError(res, err); }
                 //res.status(201).json(response.ops[0]);
                 
-                // keep user as authenticated    
-                var token = auth.signToken(user._id, user.role);
+                // keep user as authenticated   
+                if(user.isActive){ 
+                    var token = auth.signToken(user._id, user.role);
 
-                var userProfile = { //exclude sensitive info
-                    name:user.name,
-                    email: user.email,
-                    role:user.role
-                };
+                    var userProfile = { //exclude sensitive info
+                        name:user.name,
+                        email: user.email,
+                        role:user.role
+                    };
 
-                auth.setCookies(req, res, token, userProfile);
-                
-                res.redirect('/');                   
-                
+                    auth.setCookies(req, res, token, userProfile); 
+                }                
+                res.redirect('/');   
             });            
             
             //res.json(customerEmployee);
-        } else {
-            res.send(false);
-        }   
-    }); 
+        // } else {
+        //     res.send(false);
+        // }   
+    //}); 
 };
 
 /**

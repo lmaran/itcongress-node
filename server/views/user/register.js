@@ -8,6 +8,8 @@
     var emailEl, emailFg, emailErr;
     
     var pswEl, pswFg, pswErr;
+    
+    var isEmailApproved = true;
 
     
     // DOM ready
@@ -72,8 +74,9 @@
         if(companyOwner) data.companyOwner = companyOwner;
         
         var owner = getParameterByName('owner');
-        if(owner) data.owner = owner;     
-        
+        if(owner) data.owner = owner; 
+        if(!isEmailApproved) data.status = 'WaitingForApproval';   
+        console.log(data);
         $.post(url, data)
             .done(function(){
                 document.location.href="/"; // redirect to homepage
@@ -179,10 +182,12 @@
                     var url2 = "/api/customerEmployees/checkemail/" + emailEl.val();
                     $.get(url2, function(result2){
                         if(!result2){ // result = false if email is not present in Customers DB
-                            emailFg.addClass("has-error");
-                            emailErr.html("Adresa de email necunoscuta.  </br> Va rog sa comunicati aceasta adresa la ETA2U, spre aprobare.");
-                            emailEl.focus();
-                            dfd.resolve(false);                    
+                            // emailFg.addClass("has-error");
+                            // emailErr.html("Adresa de email necunoscuta.  </br> Va rog sa comunicati aceasta adresa la ETA2U, spre aprobare.");
+                            // emailEl.focus();
+                            // dfd.resolve(false); 
+                            isEmailApproved = false;
+                            dfd.resolve(true);
                         } else {
                             dfd.resolve(true);
                         }            

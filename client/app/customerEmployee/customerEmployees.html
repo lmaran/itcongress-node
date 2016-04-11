@@ -7,7 +7,7 @@
         </button>
         <a href="/admin"><span class="glyphicon glyphicon-home"></span></a>
     </li>
-    <li class="active">Angajati client</li>
+    <li class="active">Whitelist</li>
 </ol>
 
 <div class="container-fluid">
@@ -18,7 +18,7 @@
         <div class="col-md-6">
             <form class="form-inline">
                 <div class="form-group">                  
-                    <button type="button" class="btn btn-primary" ng-click="create()"> <span class="glyphicon glyphicon-plus"></span> Adauga angajat </button>
+                    <button type="button" class="btn btn-primary" ng-click="create()"> <span class="glyphicon glyphicon-plus"></span> Adauga email </button>
                 </div>
             </form> 
         </div>
@@ -44,10 +44,7 @@
         <table class="table table-responsive table-hover table-condensed">
             <thead>
                 <tr>
-                    <th>Nume</th>
                     <th>Email</th>
-                    <th>Card</th>
-                    <th>Activ</th>
                     <th></th>
                 </tr>
             </thead>
@@ -56,12 +53,8 @@
                         | filter: mySearch
                         as results">
                     <td>
-                        <a ng-href="/admin/customerEmployees/{{customerEmployee._id}}">{{customerEmployee.name}}</a>
-                        <i class="glyphicon glyphicon-info-sign" ng-if="customerEmployee.description" bs-tooltip data-animation="am-fade-and-scale" data-title="{{customerEmployee.description}}"></i>
+                        <a ng-href="/admin/customerEmployees/{{customerEmployee._id}}">{{customerEmployee.email}}</a>
                     </td>
-                    <td>{{ customerEmployee.email }}</td>
-                    <td>{{ customerEmployee.badgeCode }}</td>
-                    <td><span ng-show="customerEmployee.isActive" class="glyphicon glyphicon-ok" aria-hidden="true"></span></td>
                     <td>
                         <a href ng-click="delete(customerEmployee)">sterge</a>
                     </td>

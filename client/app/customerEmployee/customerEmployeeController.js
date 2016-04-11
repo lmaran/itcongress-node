@@ -6,7 +6,7 @@ app.controller('customerEmployeeController', ['$scope', '$route', 'customerEmplo
        
     var promiseToGetCustomerEmployee;        
     $scope.isEditMode = $route.current.isEditMode;
-    $scope.isFocusOnName = $scope.isEditMode ? false : true;
+    $scope.isFocusOnEmail = $scope.isEditMode ? false : true;
     
     $scope.isActiveOptions = [{id: true, name: 'Da'},{id: false, name: 'Nu'}];
     $scope.customerEmployee = {};
@@ -73,8 +73,8 @@ app.controller('customerEmployeeController', ['$scope', '$route', 'customerEmplo
         helperValidator.setAllFildsAsValid(form);
         
         // fields
-        helperValidator.required50($scope, form, entity, 'name');
-        helperValidator.optionalEmail($scope, form, entity, 'email');
+        //helperValidator.required50($scope, form, entity, 'name');
+        helperValidator.requiredEmail($scope, form, entity, 'email');
     }     
 
 }]);

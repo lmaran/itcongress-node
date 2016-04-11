@@ -5,7 +5,7 @@ app.config(['$routeProvider', function ($routeProvider) {
         .when('/admin/customerEmployees', {
             controller: 'customerEmployeesController',
             templateUrl: 'app/customerEmployee/customerEmployees.html',
-			title: 'Angajati client',
+			title: 'Whitelist',
 	        //not reload the view if the search part of the url changes. 
             // http://stackoverflow.com/a/14974448/2726725            
             reloadOnSearch:false
@@ -13,12 +13,12 @@ app.config(['$routeProvider', function ($routeProvider) {
 	    .when('/admin/customerEmployees/create', {
 	        controller: 'customerEmployeeController',
 	        templateUrl: 'app/customerEmployee/customerEmployee.html',
-	        title: 'Adauga angajat'
+	        title: 'Adauga email'
 	    })
 	    .when('/admin/customerEmployees/:id', {
 	        controller: 'customerEmployeeController',
 	        templateUrl: 'app/customerEmployee/customerEmployee.html',
-	        title: 'Editeaza angajat',
+	        title: 'Editeaza email',
             isEditMode: true 
 	    });	
 }]);

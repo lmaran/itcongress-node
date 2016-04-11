@@ -51,7 +51,7 @@ app.controller('customerEmployeesController', ['$scope', '$location', 'customerE
         var isMatch = false;
         if ($scope.search) {
             // search by employeeName or badge
-            if (new RegExp($scope.search, 'i').test(item.name) || new RegExp($scope.search, 'i').test(item.badgeCode)) {
+            if (new RegExp($scope.search, 'i').test(item.email)) {
                 isMatch = true;
             }
         } else {

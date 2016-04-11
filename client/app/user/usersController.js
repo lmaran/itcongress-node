@@ -67,10 +67,10 @@ app.controller('usersController', ['$scope', '$http', 'userService', 'modalServi
             if (new RegExp($scope.search, 'i').test(item.name) || new RegExp($scope.search, 'i').test(item.email) || new RegExp($scope.search, 'i').test(item.company)) {
                 isMatch = true;
             } else return false;
-        };
+        }
             
         if($scope.isWaitingSelected){
-            isMatch = item.status == 'aproba';
+            isMatch = item.status === 'aproba';
         }
 
         return isMatch;

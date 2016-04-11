@@ -45,7 +45,11 @@
             <thead>
                 <tr>
                     <th>Nume</th>
+                    <th>Company</th>
+                    <th>Phone</th>
                     <th>Email</th>
+                    <th>Owner</th>
+                    <th>CompanyOwner</th>
                     <th>Rol</th>
                     <th>Stare</th>
                     <th></th>
@@ -58,7 +62,11 @@
                     <td>
                         <a ng-href="/admin/users/{{user._id}}">{{user.name}}</a>
                     </td>
+                    <td>{{ user.company }}</td>
+                    <td>{{ user.phone }}</td>
                     <td>{{ user.email }}</td>
+                    <td>{{ user.owner }}</td>
+                    <td>{{ user.companyOwner }}</td>
                     <td>{{ user.role }}</td>
                     <td>{{ user.status }}</td>
                     <td>

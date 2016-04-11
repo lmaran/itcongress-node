@@ -5,20 +5,20 @@ app.controller('usersController', ['$scope', '$http', 'userService', 'modalServi
 
     /*jshint latedef: nofunc */ // https://jslinterrors.com/a-was-used-before-it-was-defined
     init();
+    $scope.isWaitingSelected = false;
     
     function init(){
         userService.getAll().then(function(data){
             data.forEach(function(user){
                 if(user.activationToken){
                     user.status = 'asteapta activare';
-                } else{
-                    user.status = 'activ';
+                } else if (user.status === 'WaitingForApproval'){
+                    user.status = 'aproba';  
+                } else if(user.isActive){
+                    user.status = 'activ';                                  
+                } else if(!user.isActive){
+                    user.status = 'inactiv';
                 }
-                // } else if(user.isActive){
-                //     user.status = 'activ';
-                // } else if (!user.isActive){
-                //     user.status = 'inactiv';
-                // }
             });
             $scope.users = data;
             
@@ -59,16 +59,40 @@ app.controller('usersController', ['$scope', '$http', 'userService', 'modalServi
     };
     
     $scope.mySearch = function (item) {
-        var isMatch = false;
+        // if nothing is entered, return all posts
+        var isMatch = true;
+        
         if ($scope.search) {
             // search by user name or email
-            if (new RegExp($scope.search, 'i').test(item.name) || new RegExp($scope.search, 'i').test(item.email)) {
+            if (new RegExp($scope.search, 'i').test(item.name) || new RegExp($scope.search, 'i').test(item.email) || new RegExp($scope.search, 'i').test(item.company)) {
                 isMatch = true;
-            }
-        } else {
-            // if nothing is entered, return all posts
-            isMatch = true;
+            } else return false;
+        };
+            
+        if($scope.isWaitingSelected){
+            isMatch = item.status == 'aproba';
         }
+
         return isMatch;
-    };    
+    }; 
+    
+    $scope.approveUser = function(user){
+        //alert('aprobat');
+        
+        
+        user.status = null;
+        user.isActive = true;
+        
+        //console.log(user);
+        
+        userService.update(user)
+            .then(function (data) {
+                //$location.path('/admin/users');
+                //Logger.info("Widget created successfully");
+                init();
+            })
+            .catch(function (err) {
+                alert(JSON.stringify(err.data, null, 4));
+            });        
+    }   
 }]);

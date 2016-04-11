@@ -16,7 +16,9 @@ app.controller('usersController', ['$scope', '$http', 'userService', 'modalServi
                     user.status = 'aproba';  
                 } else if(user.isActive){
                     user.status = 'activ';                                  
-                } else if(!user.isActive){
+                } else if(user.isActive === undefined){
+                    user.status = 'activ';
+                } else if(user.isActive === false){
                     user.status = 'inactiv';
                 }
             });

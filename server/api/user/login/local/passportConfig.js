@@ -14,6 +14,9 @@ passport.use(new LocalStrategy(
             if (!user) {
                 return done(null, false, { message: 'Acest email nu este inregistrat.' });
             }
+            if (user.status === 'WaitingForApproval') {
+                return done(null, false, { message: 'Veti primi un email de confirmare in momentul in care contul dvs. va fi aprobat.' });
+            }            
             if (!userService.authenticate(password, user.hashedPassword, user.salt)) {
                 return done(null, false, { message: 'Aceasta parola este incorecta.' });
             }

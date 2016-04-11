@@ -127,18 +127,18 @@
     // all validations
     customerEmployeeValidator.all = function(req, res, cbResult){       
         async.parallel([
-            function(cb){
-               customerEmployeeValidator.name(req, res, cb);
-            },
+            // function(cb){
+            //    customerEmployeeValidator.name(req, res, cb);
+            // },
             function(cb){
                customerEmployeeValidator.email(req, res, cb);
-            },
-            function(cb){
-                customerEmployeeValidator.isActive(req, res, cb);
-            },
-            function(cb){
-               customerEmployeeValidator.badgeCode(req, res, cb);
-            }                                                 
+            }
+            // function(cb){
+            //     customerEmployeeValidator.isActive(req, res, cb);
+            // },
+            // function(cb){
+            //    customerEmployeeValidator.badgeCode(req, res, cb);
+            // }                                                 
         ],
         function (err, results) {
             results = _.compact(results); // remove null elements from array

@@ -87,8 +87,14 @@ exports.createPublicUser = function (req, res, next) {
         if(customerEmployee){
             
             var user = {};
-            user.name = customerEmployee.name;
-            user.email = customerEmployee.email;
+            user.lastName = data.lastName;
+            user.firstName = data.firstName;
+            user.name = user.firstName + ' ' + user.lastName;
+            user.company = data.company;
+            user.phone = data.phone;
+            user.email = data.email;
+            if(data.companyOwner) user.companyOwner = data.companyOwner;
+            if(data.owner) user.owner = data.owner;
             
             user.salt = userService.makeSalt();
             user.hashedPassword = userService.encryptPassword(data.password, user.salt);  

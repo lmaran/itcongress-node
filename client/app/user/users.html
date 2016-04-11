@@ -51,6 +51,7 @@
         <table class="table table-responsive table-hover table-condensed">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Nume</th>
                     <th>Company</th>
                     <th>Phone</th>
@@ -66,6 +67,7 @@
                 <tr data-ng-repeat="user in users 
                         | filter: mySearch
                         as results">
+                    <td>{{$index+1}}</td>
                     <td>
                         <!--<a ng-href="/admin/users/{{user._id}}">{{user.name}}</a>-->
                         {{user.name}}

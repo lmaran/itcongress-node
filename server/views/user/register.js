@@ -1,6 +1,12 @@
 (function(){
     var formEl;
+    
+    var lastNameEl, lastNameFg, lastNameErr;
+    var firstNameEl, firstNameFg, firstNameErr;
+    var companyEl, companyFg, companyErr;
+    var phoneEl, phoneFg, phoneErr;
     var emailEl, emailFg, emailErr;
+    
     var pswEl, pswFg, pswErr;
 
     
@@ -8,6 +14,22 @@
     $(function(){
         // def
         formEl = $("form");
+        
+        lastNameEl = $("[name='lastName']");
+        lastNameFg = $("#lastNameFg");
+        lastNameErr = $("#lastNameErr");
+        
+        firstNameEl = $("[name='firstName']");
+        firstNameFg = $("#firstNameFg");
+        firstNameErr = $("#firstNameErr");
+        
+        companyEl = $("[name='company']");
+        companyFg = $("#companyFg");
+        companyErr = $("#companyErr");
+        
+        phoneEl = $("[name='phone']");
+        phoneFg = $("#phoneFg");
+        phoneErr = $("#phoneErr");                                
         
         emailEl = $("[name='email']");
         emailFg = $("#emailFg");
@@ -25,22 +47,32 @@
     function onSubmitForm(event){
         event.preventDefault();
 
-        $.when(checkEmail(), checkPsw())
-            .done(function(v1, v2){
-                if(v1 && v2){
-                    //alert('ok');
+        $.when(checkLastName(), checkFirstName(), checkCompany(), checkPhone(), checkEmail(), checkPsw())
+            .done(function(v1, v2, v3, v4, v5, v6){
+                if(v1 && v2 && v3 && v4 && v5 && v6){
                     saveUser();
                 }
-            });       
+            });            
     }
     
     function saveUser(){
         var url = '/api/users/createpublicuser';
         
         var data = {
+            lastName: lastNameEl.val(),
+            firstName: firstNameEl.val(),
+            company: companyEl.val(),
+            phone: phoneEl.val(),
             email: emailEl.val(),
+            
             password: pswEl.val()                
         };
+        
+        var companyOwner = getParameterByName('companyowner');
+        if(companyOwner) data.companyOwner = companyOwner;
+        
+        var owner = getParameterByName('owner');
+        if(owner) data.owner = owner;     
         
         $.post(url, data)
             .done(function(){
@@ -50,6 +82,78 @@
                 alert(err);
             });        
     }
+    
+    function checkLastName(){
+        var dfd = $.Deferred();
+
+        // reset validation errors
+        lastNameFg.removeClass("has-error");
+        lastNameErr.text("");
+
+        if (lastNameEl.val() == "") {
+            lastNameFg.addClass("has-error");
+            lastNameErr.text("Acest camp este obligatoriu.");
+            lastNameEl.focus();
+            dfd.resolve(false);
+        } else {
+            dfd.resolve(true);
+        }            
+        return dfd.promise();
+    }
+    
+    function checkFirstName(){
+        var dfd = $.Deferred();
+
+        // reset validation errors
+        firstNameFg.removeClass("has-error");
+        firstNameErr.text("");
+
+        if (firstNameEl.val() == "") {
+            firstNameFg.addClass("has-error");
+            firstNameErr.text("Acest camp este obligatoriu.");
+            firstNameEl.focus();
+            dfd.resolve(false);
+        } else {
+            dfd.resolve(true);
+        }             
+        return dfd.promise();
+    }
+    
+    function checkCompany(){
+        var dfd = $.Deferred();
+
+        // reset validation errors
+        companyFg.removeClass("has-error");
+        companyErr.text("");
+
+        if (companyEl.val() == "") {
+            companyFg.addClass("has-error");
+            companyErr.text("Acest camp este obligatoriu.");
+            companyEl.focus();
+            dfd.resolve(false);
+        } else {
+            dfd.resolve(true);
+        }              
+        return dfd.promise();
+    }
+    
+    function checkPhone(){
+        var dfd = $.Deferred();
+
+        // reset validation errors
+        phoneFg.removeClass("has-error");
+        phoneErr.text("");
+
+        if (phoneEl.val() == "") {
+            phoneFg.addClass("has-error");
+            phoneErr.text("Acest camp este obligatoriu.");
+            phoneEl.focus();
+            dfd.resolve(false);
+        } else {
+            dfd.resolve(true);
+        }              
+        return dfd.promise();
+    }                
     
     function checkEmail(){
         var dfd = $.Deferred();
@@ -76,7 +180,7 @@
                     $.get(url2, function(result2){
                         if(!result2){ // result = false if email is not present in Customers DB
                             emailFg.addClass("has-error");
-                            emailErr.html("Adresa de email necunoscuta.  </br> Va rog sa comunicati aceasta adresa la cantina, spre inregistrare.");
+                            emailErr.html("Adresa de email necunoscuta.  </br> Va rog sa comunicati aceasta adresa la ETA2U, spre aprobare.");
                             emailEl.focus();
                             dfd.resolve(false);                    
                         } else {
@@ -125,6 +229,17 @@
         var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
     } 
+    
+    function getParameterByName(name, url) {
+        // http://stackoverflow.com/a/901144
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)", "i"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }    
     
 })();
 

@@ -228,6 +228,41 @@ gulp.task('watch-client', function() { // using the native "gulp.watch" plugin
         };
 
     });
+    
+    gulp.watch('server/public/**/*.*').on('change', function(file) { // no "./" in front of glob
+        // we have to monitor all kind of files, in all folders
+        // otherwise, the 'watch' doesn't catch added files in new folders,
+        // or folders that does't contain at least one file with same extension as that monitored.
+        
+        var ext = path.extname(file.path); // ex: .js       
+        //var fileName = file.path.replace(__dirname, ''); // ex: \client\app\controllers\test.js
+        var fileName = path.basename(file.path); // ex: test.css
+        var crtDir = path.parse(file.path).dir; // ex: c:/.../controllers
+        var name = path.parse(file.path).name; // ex: test      
+
+        gutil.log(gutil.colors.cyan('watch-all'), 'saw',  gutil.colors.magenta(fileName), 'was ' + file.type);            
+        
+        if(ext == '.less'){                                                 
+            if(file.type === 'deleted'){
+                del(path.join(crtDir, name) + '.css'); 
+            } else if(file.type === 'added' || file.type === 'changed' || file.type === 'renamed'){
+                gulp.src(file.path)
+                    .pipe(less())
+                    .pipe(gulp.dest(path.parse(file.path).dir)); 
+            };             
+        
+        } else if(ext == '.css'){                  
+            if(file.type === 'added' || file.type === 'renamed'){
+                injectCssAndReload();
+            } else if(file.type === 'deleted'){ 
+                del(file.path, injectCssAndReload);
+            } else if(file.type === 'changed'){
+                livereload.changed(fileName);         
+            };             
+        
+        } 
+
+    });    
 });
         
 

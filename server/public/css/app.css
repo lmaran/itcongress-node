@@ -19,3 +19,91 @@ body {
   position: absolute;
   top: 3px;
 }
+/*itcongress styles*/
+body {
+  padding-top: 100px;
+}
+.navbar {
+  min-height: 100px;
+  background-color: #fff;
+  padding-top: 0px;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #000;
+}
+.navbar-fixed-top .nav {
+  padding: 15px 0;
+}
+.navbar-brand {
+  padding-top: 10px;
+}
+.footer {
+  padding: 2% 0;
+  margin-top: 200px;
+  background: #fff;
+  border-top: 1px solid #ccc;
+}
+.footer_text {
+  float: right;
+  font-size: 14px;
+  font-style: italic;
+  color: #cacaca;
+  text-align: right;
+}
+.footer_text ul {
+  padding-left: 0;
+}
+.social_nav {
+  list-style: none;
+  margin-top: 15px;
+}
+.social_nav li {
+  display: inline;
+  margin: 10px 15px;
+}
+.social_nav li a {
+  color: #000;
+  font-size: 25px;
+}
+.container .jumbotron {
+  background-color: #0393f5;
+  border-radius: 0;
+  color: #fff;
+  text-align: center;
+}
+.container .jumbotron h1 {
+  font-size: 30px;
+  display: block;
+  font-weight: 500;
+  margin-bottom: 3%;
+}
+.container .jumbotron p {
+  margin: 5% 0;
+  font-size: 21px;
+  color: #fff;
+  line-height: 35px;
+}
+@media (max-width: 767px) {
+  body {
+    padding-top: 50px;
+  }
+  .navbar {
+    min-height: 50px;
+  }
+  .navbar-brand {
+    padding: 0;
+  }
+  .navbar-brand img {
+    margin-top: 5px;
+    margin-left: 5px;
+  }
+  .visible-xs {
+    width: 60%;
+    margin-left: 20%;
+    height: auto;
+  }
+  .footer_text {
+    float: none;
+    text-align: left;
+  }
+}

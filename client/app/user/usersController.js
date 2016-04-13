@@ -9,18 +9,19 @@ app.controller('usersController', ['$scope', '$http', 'userService', 'modalServi
     
     function init(){
         userService.getAll().then(function(data){
-            data.forEach(function(user){
-                if(user.activationToken){
-                    user.status = 'asteapta activare';
-                } else if (user.status === 'WaitingForApproval'){
-                    user.status = 'aproba';  
-                } else if(user.isActive){
-                    user.status = 'activ';                                  
-                } else if(user.isActive === undefined){
-                    user.status = 'activ';
-                } else if(user.isActive === false){
-                    user.status = 'inactiv';
-                }
+            data.forEach(function(user, idx){
+                user.id2 = idx + 1;
+                // if(user.activationToken){
+                //     user.status = 'asteapta activare';
+                // } else if (user.status === 'WaitingForApproval'){
+                //     user.status = 'aproba';  
+                // } else if(user.isActive){
+                //     user.status = 'activ';                                  
+                // } else if(user.isActive === undefined){
+                //     user.status = 'activ';
+                // } else if(user.isActive === false){
+                //     user.status = 'inactiv';
+                // }
             });
             $scope.users = data;
             
@@ -72,29 +73,38 @@ app.controller('usersController', ['$scope', '$http', 'userService', 'modalServi
         }
             
         if($scope.isWaitingSelected){
-            isMatch = item.status === 'aproba';
+            isMatch = item.status === 'WaitingForApproval';
         }
 
         return isMatch;
     }; 
     
-    $scope.approveUser = function(user){
-        //alert('aprobat');
-        
-        
-        user.status = null;
+    $scope.activateUser = function(user){
+        if(user.status === 'WaitingForApproval') 
+            user.status = null;
         user.isActive = true;
-        
-        //console.log(user);
-        
+
         userService.update(user)
             .then(function (data) {
-                //$location.path('/admin/users');
-                //Logger.info("Widget created successfully");
+                init();
+            })
+            .catch(function (err) {
+                alert(JSON.stringify(err.data, null, 4));
+            });        
+    } 
+        
+    $scope.deactivateUser = function(user){
+        if(user.status === 'WaitingForApproval') 
+            user.status = null;        
+        user.isActive = false;
+
+        userService.update(user)
+            .then(function (data) {
                 init();
             })
             .catch(function (err) {
                 alert(JSON.stringify(err.data, null, 4));
             });        
     }   
+       
 }]);

@@ -8,6 +8,7 @@
     var emailEl, emailFg, emailErr;
     
     var pswEl, pswFg, pswErr;
+    var confirmPswEl, confirmPswFg, confirmPswErr;
     
     var isEmailApproved = true;
 
@@ -39,7 +40,11 @@
         
         pswEl = $("[name='password']")  
         pswFg = $("#pswFg");
-        pswErr = $("#pswErr");        
+        pswErr = $("#pswErr");  
+        
+        confirmPswEl = $("[name='confirmPassword']")  
+        confirmPswFg = $("#confirmPswFg");
+        confirmPswErr = $("#confirmPswErr");               
               
         // events
         formEl.submit(onSubmitForm);
@@ -49,9 +54,9 @@
     function onSubmitForm(event){
         event.preventDefault();
 
-        $.when(checkLastName(), checkFirstName(), checkCompany(), checkPhone(), checkEmail(), checkPsw())
-            .done(function(v1, v2, v3, v4, v5, v6){
-                if(v1 && v2 && v3 && v4 && v5 && v6){
+        $.when(checkLastName(), checkFirstName(), checkCompany(), checkPhone(), checkEmail(), checkPsw(), checkConfirmPsw())
+            .done(function(v1, v2, v3, v4, v5, v6, v7){
+                if(v1 && v2 && v3 && v4 && v5 && v6 && v7){
                     saveUser();
                 }
             });            
@@ -227,7 +232,26 @@
         }                 
         
         return dfd.promise();
-    }       
+    } 
+    
+    function checkConfirmPsw(){
+        var dfd = $.Deferred();
+
+        // reset validation errors
+        confirmPswFg.removeClass("has-error");
+        confirmPswErr.text(""); 
+
+        if (confirmPswEl.val() !== pswEl.val()) {
+            confirmPswFg.addClass("has-error");
+            confirmPswErr.text("Parola confirmata nu coincide cu parola initiala.");
+            confirmPswEl.focus();
+            dfd.resolve(false); 
+        } else {
+            dfd.resolve(true); 
+        }                 
+        
+        return dfd.promise();
+    }           
    
     function isEmail(email) {
         // http://stackoverflow.com/a/46181/2726725

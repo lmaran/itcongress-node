@@ -84,7 +84,11 @@
         console.log(data);
         $.post(url, data)
             .done(function(){
-                document.location.href="/"; // redirect to homepage
+                if(isEmailApproved){
+                    document.location.href="/registerConfirm";
+                } else {
+                    document.location.href="/registerConfirmWait"; 
+                }
             })
             .fail(function(err){
                 alert(err);

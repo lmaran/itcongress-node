@@ -66,8 +66,11 @@
             <tbody>
                 <tr data-ng-repeat="user in users 
                         | filter: mySearch
-                        as results">
-                    <td>{{$index+1}}</td>
+                        as results"
+                        ng-class="{
+                            'danger':(user.isActive === false && user.status !== 'WaitingForApproval'),
+                            'warning':user.status === 'WaitingForApproval'}">
+                    <td>{{user.id2}}</td>
                     <td>
                         <!--<a ng-href="/admin/users/{{user._id}}">{{user.name}}</a>-->
                         {{user.name}}
@@ -78,10 +81,15 @@
                     <td>{{ user.owner }}</td>
                     <td>{{ user.companyOwner }}</td>
                     <td>{{ user.role }}</td>
-                    <td ng-if="user.status === 'aproba'"><a href ng-click="approveUser(user)">{{ user.status }}</a></td>
-                    <td ng-if="user.status !== 'aproba'">{{ user.status }}</td>
                     <td>
-                        <a href ng-click="delete(user)">sterge</a>
+                        <a ng-if="user.status === 'WaitingForApproval' && !user.isActive" href ng-click="activateUser(user)">activeaza</a>
+                        <span ng-if="user.status !== 'WaitingForApproval' &&  !user.isActive">inactiv</span>
+                        <span ng-if="user.status !== 'WaitingForApproval' &&  user.isActive">activ</span>
+                    </td>
+                    <td>
+                        <a ng-if="user.status === 'WaitingForApproval' && !user.isActive" href ng-click="deactivateUser(user)">dezactiveaza</a>
+                        <a ng-if="user.status !== 'WaitingForApproval' &&  !user.isActive" href ng-click="activateUser(user)">activeaza</a>
+                        <a ng-if="user.status !== 'WaitingForApproval' &&  user.isActive" href ng-click="deactivateUser(user)">dezactiveaza</a>
                     </td>
                 </tr>
             </tbody>

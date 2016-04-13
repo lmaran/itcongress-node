@@ -114,30 +114,32 @@ exports.createPublicUser = function (req, res, next) {
             user.createdBy = 'External user';    
             user.createdOn = new Date();           
             
-            userService.create(user, function (err, response) {
+            userService.getByValue('email', user.email, null, function (err, usr) {
                 if(err) { return handleError(res, err); }
-                //res.status(201).json(response.ops[0]);
-                
-                // keep user as authenticated   
-                if(user.isActive){ 
-                    var token = auth.signToken(user._id, user.role);
 
-                    var userProfile = { //exclude sensitive info
-                        name:user.name,
-                        email: user.email,
-                        role:user.role
-                    };
+                if(usr){
+                    res.send('duplicate user');
+                } else {
+                    userService.create(user, function (err, response) {
+                        if(err) { return handleError(res, err); }
+                        //res.status(201).json(response.ops[0]);
+                        
+                        // keep user as authenticated   
+                        if(user.isActive){ 
+                            var token = auth.signToken(user._id, user.role);
 
-                    auth.setCookies(req, res, token, userProfile); 
-                }                
-                res.redirect('/');   
-            });            
-            
-            //res.json(customerEmployee);
-        // } else {
-        //     res.send(false);
-        // }   
-    //}); 
+                            var userProfile = { //exclude sensitive info
+                                name:user.name,
+                                email: user.email,
+                                role:user.role
+                            };
+
+                            auth.setCookies(req, res, token, userProfile); 
+                        }                
+                        res.redirect('/');   
+                    }); 
+                }  
+            });             
 };
 
 /**

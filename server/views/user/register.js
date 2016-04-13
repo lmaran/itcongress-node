@@ -187,10 +187,6 @@
                     var url2 = "/api/customerEmployees/checkemail/" + emailEl.val();
                     $.get(url2, function(result2){
                         if(!result2){ // result = false if email is not present in Customers DB
-                            // emailFg.addClass("has-error");
-                            // emailErr.html("Adresa de email necunoscuta.  </br> Va rog sa comunicati aceasta adresa la ETA2U, spre aprobare.");
-                            // emailEl.focus();
-                            // dfd.resolve(false); 
                             isEmailApproved = false;
                             dfd.resolve(true);
                         } else {

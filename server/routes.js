@@ -86,7 +86,8 @@ module.exports = function(app) {
     
     app.get('/changePassword', auth.isAuthenticated(), function(req,res){res.render('user/changePassword', {user: req.user});});
     app.get('/todaysMenu', require('./views/menu/menuController').renderTodaysMenu);  
-    app.get('/nextMenus', require('./views/menu/menuController').renderNextMenus);     
+    app.get('/nextMenus', require('./views/menu/menuController').renderNextMenus);
+    app.get('/agenda', require('./views/agenda/agendaController').renderAgenda);     
 
     
     // client-side views

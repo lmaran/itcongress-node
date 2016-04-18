@@ -1,0 +1,80 @@
+﻿<div ng-include="'app/navbar/navbar.html'"></div>
+
+<ol class="breadcrumb">
+    <li>
+        <button ng-click="goBack();" type="button" class="btn btn-default btn-xs" style="margin-right:15px">
+            <span class="glyphicon glyphicon-arrow-left" ></span> Inapoi
+        </button>
+        <a href="/admin"><span class="glyphicon glyphicon-home"></span></a>
+    </li>
+    <li><a href="/admin/sessions">Agenda</a></li>
+    <li class="active">Sesiune: {{session.timeSlot || 'nou'}}</li>
+</ol>
+
+<div class="container-fluid">
+    <h1>{{pageTitle}}</h1>
+
+    <form ng-submit="isEditMode ? update(form) : create(form)" name="form" class="form-horizontal max-width" role="form" autocomplete="off" novalidate>
+
+        <div class="form-group" ng-class="{'has-error' : form.timeSlot.$invalid}">
+            <label class="col-md-2 control-label required">timeSlot </label>
+            <!--<div class="col-md-4">
+                <input type="text" name="timeSlot" ng-model="session.timeSlot" class="form-control" lm-focus="isFocusOntimeSlot"/>                
+                <p ng-show="form.timeSlot.$error.myValidation" class="help-block">{{errors.timeSlot}}</p>
+            </div>-->
+            
+            <div class="col-md-4">
+                
+                <!-- workaround to add the ui-select value to the form - useful for validation
+                     https://github.com/angular-ui/ui-select/issues/850#issuecomment-167680690  -->
+                <!--<input type="text" style="display: none" name="timeSlotName" ng-model="orderLine.timeSlotName"/>
+                
+                <ui-select ng-model="obj.selectedEmployee" autofocus="true" focus-on='SetFocus' on-select="selectEmployee($item, $model)">
+                    <ui-select-match>
+                        <span ng-bind="$select.selected.name"></span>
+                    </ui-select-match>
+                    <ui-select-choices repeat="item in (timeSlots | filter: {name:$select.search}) track by item._id">
+                        <span ng-bind-html="item.name | highlight: $select.search"></span>
+                    </ui-select-choices>
+                </ui-select>                -->
+                <select name="timeSlot" ng-model="session.timeSlot" ng-options="timeSlot.name as timeSlot.name for timeSlot in timeSlotList" class="form-control"></select>
+                <p ng-show="form.timeSlot.$error.myValidation" class="help-block">{{errors.timeSlot}}</p>
+            </div>            
+            
+        </div>
+
+        <div class="form-group" ng-class="{'has-error' : form.room.$invalid}">
+            <label class="col-md-2 control-label required">room </label>
+            <div class="col-md-4">
+                <!--<input type="text" name="room" ng-model="session.room" class="form-control" lm-focus="isFocusOnroom"/>-->
+                <select name="room" ng-model="session.room" ng-options="room.id as room.name for room in rooms" class="form-control"></select>                
+                <p ng-show="form.room.$error.myValidation" class="help-block">{{errors.room}}</p>
+            </div>
+        </div>
+        
+        <div class="form-group" ng-class="{'has-error' : form.brandId.$invalid}">
+            <label class="col-md-2 control-label">brand </label>
+            <div class="col-md-4">
+                <select name="brand" ng-model="session.brand" ng-options="brand.name as brand.name for brand in brands" class="form-control"></select>                
+                <p ng-show="form.brandId.$error.myValidation" class="help-block">{{errors.brandId}}</p>
+            </div>
+        </div> 
+        
+        <div class="form-group" ng-class="{'has-error' : form.title.$invalid}">
+            <label class="col-md-2 control-label">title </label>
+            <div class="col-md-4">
+                <input type="text" name="title" ng-model="session.title" class="form-control" lm-focus="isFocusOntitle"/>                
+                <p ng-show="form.title.$error.myValidation" class="help-block">{{errors.title}}</p>
+            </div>
+        </div>               
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-floppy-disk"></span> Salveaza </button>
+                <button type="button" class="btn btn-default" ng-click="goBack()"> <span class=" glyphicon glyphicon-remove"></span> Renunta </button>
+            </div>
+        </div>
+
+    </form>
+
+</div>

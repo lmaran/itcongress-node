@@ -10,7 +10,7 @@
     // ---------- OData ----------
     sessionService.getAll = function (odataQuery, next) {  
         var query = mongoService.getQuery(odataQuery);
-        if(query.$sort === undefined) query.$sort = {name: 1}; // sort by name (asc)
+        if(query.$sort === undefined) query.$sort = {timeSlot: 1, room:1}; // sort by name (asc)
         mongoService.getAll(collection, query, next);
     };
 

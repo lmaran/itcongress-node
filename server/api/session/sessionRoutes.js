@@ -1,7 +1,7 @@
 'use strict';
 
 var express = require('express');
-var controller = require('./customerEmployeeController');
+var controller = require('./sessionController');
 var router = express.Router();
 
 // ---------- OData ----------

@@ -14,7 +14,7 @@
         sessionService.getByEventId(eventId, req.user, function (err, sessions) {
             if(err) { return handleError(res, err); }
             
-            console.log(sessions);
+            //console.log(sessions);
             
             var length = sessions.length;
             for (var i = 0; i < length; i++) {

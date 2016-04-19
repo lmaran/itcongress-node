@@ -5,6 +5,7 @@ var sessionValidator = require('./sessionValidator');
 var preferenceService = require('../preference/preferenceService');
 var config = require('../../config/environment');
 var emailService = require('../../data/emailService');
+var _ = require('lodash'); 
 
 
 // ---------- OData ----------
@@ -12,9 +13,9 @@ exports.getAll = function (req, res) {
     var odataQuery = req.query;
     odataQuery.hasCountSegment = req.url.indexOf('/$count') !== -1 //check for $count as a url segment
     if(!odataQuery.$top) odataQuery.$top = "4000"; // if $top is not specified, return max. 1000 records
-        
+  
     sessionService.getAll(odataQuery, function (err, sessions) {
-        if(err) { return handleError(res, err); }
+        if(err) { return handleError(res, err); }       
         res.status(200).json(sessions);        
     });
 };
@@ -30,6 +31,7 @@ exports.create = function(req, res){
             var session = req.body;
             
             //session.isActive = true;
+            session.eventId = "itcongress2016";
             session.createBy = req.user.name;    
             session.createdOn = new Date();              
             

@@ -1,65 +1,24 @@
 (function(){
     var formEl;
     
-    var lastNameEl, lastNameFg, lastNameErr;
-    var firstNameEl, firstNameFg, firstNameErr;
-    var companyEl, companyFg, companyErr;
-    var phoneEl, phoneFg, phoneErr;
-    var emailEl, emailFg, emailErr;
-    
-    var pswEl, pswFg, pswErr;
-    var confirmPswEl, confirmPswFg, confirmPswErr;
-    
-    var isEmailApproved = true;
-
+    var addToScheduleEl, removeFromScheduleEl
     
     // DOM ready
     $(function(){
         // def
         formEl = $("form");
         
-        lastNameEl = $("[name='lastName']");
-        lastNameFg = $("#lastNameFg");
-        lastNameErr = $("#lastNameErr");
-        
-        firstNameEl = $("[name='firstName']");
-        firstNameFg = $("#firstNameFg");
-        firstNameErr = $("#firstNameErr");
-        
-        companyEl = $("[name='company']");
-        companyFg = $("#companyFg");
-        companyErr = $("#companyErr");
-        
-        phoneEl = $("[name='phone']");
-        phoneFg = $("#phoneFg");
-        phoneErr = $("#phoneErr");                                
-        
-        emailEl = $("[name='email']");
-        emailFg = $("#emailFg");
-        emailErr = $("#emailErr");
-        
-        pswEl = $("[name='password']")  
-        pswFg = $("#pswFg");
-        pswErr = $("#pswErr");  
-        
-        confirmPswEl = $("[name='confirmPassword']")  
-        confirmPswFg = $("#confirmPswFg");
-        confirmPswErr = $("#confirmPswErr");               
+        addToScheduleEl = $(".addToSchedule");
+        removeFromScheduleEl = $(".removeFromScheduleEl");            
               
         // events
-        formEl.submit(onSubmitForm);
+        addToScheduleEl.click(addToSchedule);
         
     });
     
-    function onSubmitForm(event){
+    function addToSchedule(event){
         event.preventDefault();
-
-        $.when(checkLastName(), checkFirstName(), checkCompany(), checkPhone(), checkEmail(), checkPsw(), checkConfirmPsw())
-            .done(function(v1, v2, v3, v4, v5, v6, v7){
-                if(v1 && v2 && v3 && v4 && v5 && v6 && v7){
-                    saveUser();
-                }
-            });            
+        alert('in curand');  
     }
     
     function saveUser(){
@@ -95,23 +54,7 @@
             });        
     }
     
-    function checkLastName(){
-        var dfd = $.Deferred();
 
-        // reset validation errors
-        lastNameFg.removeClass("has-error");
-        lastNameErr.text("");
-
-        if (lastNameEl.val() == "") {
-            lastNameFg.addClass("has-error");
-            lastNameErr.text("Acest camp este obligatoriu.");
-            lastNameEl.focus();
-            dfd.resolve(false);
-        } else {
-            dfd.resolve(true);
-        }            
-        return dfd.promise();
-    }
     
     function checkFirstName(){
         var dfd = $.Deferred();
@@ -131,41 +74,7 @@
         return dfd.promise();
     }
     
-    function checkCompany(){
-        var dfd = $.Deferred();
-
-        // reset validation errors
-        companyFg.removeClass("has-error");
-        companyErr.text("");
-
-        if (companyEl.val() == "") {
-            companyFg.addClass("has-error");
-            companyErr.text("Acest camp este obligatoriu.");
-            companyEl.focus();
-            dfd.resolve(false);
-        } else {
-            dfd.resolve(true);
-        }              
-        return dfd.promise();
-    }
-    
-    function checkPhone(){
-        var dfd = $.Deferred();
-
-        // reset validation errors
-        phoneFg.removeClass("has-error");
-        phoneErr.text("");
-
-        if (phoneEl.val() == "") {
-            phoneFg.addClass("has-error");
-            phoneErr.text("Acest camp este obligatoriu.");
-            phoneEl.focus();
-            dfd.resolve(false);
-        } else {
-            dfd.resolve(true);
-        }              
-        return dfd.promise();
-    }                
+         
     
     function checkEmail(){
         var dfd = $.Deferred();

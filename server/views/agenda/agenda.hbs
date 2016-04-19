@@ -4,48 +4,41 @@
     
     <h1>Agenda</h1>
 
-        <div class="row">
-            <div class="col-md-3 pull-right">
-                <div class="input-group">
-                    <input ng-model="search" name="newEmail" type="text" class="form-control" placeholder="Search">
-                    <span class="input-group-btn"><button class="btn btn-primary" type="button"><span class="glyphicon glyphicon-search"></span></button></span>
-                </div>
-            </div>
-            <div class="col-md-3 pull-right" ng-show="$root.status.substr(0,8) == 'Approved'">
-                Display only My Schedule: <input type="checkbox" ng-model="mySchedule" ng-true-value="true" ng-false-value="">
-            </div>
-        </div>
-    
         <ul class="media-list">
             {{#each sessions as |session sessionIndex|}}
                 <li>
                     <div class="row">
                         <div class="col-lg-2">
-                            <h4 ng-if="(session.room == '' || session.room != 'room100') || mySchedule=='true'|| search "><span class="label label-default">
-                                {{ session.day }}, {{ session.timeSlot }}</span></h4>
+                            <h4 style="margin-top:0"><span class="label label-default">
+                                {{ session.timeSlot }}</span></h4>
                         </div>
                         <div class="col-lg-10">
                             
-                            {{!--
-                            <!--<p ng-if="session.brand!=''">
-                                <img ng-src="http://solution4.blob.core.windows.net/itcongress2015/logo-{{session.brand | lowercase}}.jpg" alt="{{session.brand}}" />
-                            </p>-->
-                            --}}
-                            <!--<img ng-src="http://solution4.blob.core.windows.net/itcongress2015/logo.jpg" alt="{{session.brandId}}" />-->
-                            
-                            <a style="text-transform:uppercase; font-weight:bold">{{session.brandId}}</a>
+                            {{#if session.brand}}
+                                <p style="font-weight:bold; color:#337ab7; font-size:110%">{{session.brand}}</p>
+                            {{/if}}
 
-                            <p>
-                                {{ session.room }}
-                                <!--<strong ng-if="session.room!=''">|</strong>
-                                <span ng-repeat="speaker in session.speakers">
-                                    <a ng-href="/Speakers/{{speaker.id}}">{{speaker.name}}</a><span ng-show="!$last">,</span>
-                                </span>-->
-                            </p>
+                            {{#if session.room}}
+                                <p>{{ session.room }}</p>
+                            {{/if}}
+                            
                             <p><strong>{{ session.title }}</strong></p>
                             <p>
+                                {{#if ../isAuthenticated}}
+                                    {{#if session.isRealEvent}}
+                                        {{#unless session.isRegistered}}
+                                            <button ng-click="addToSchedule(session.sessionId, session.day, session.time)" 
+                                            class="btn btn-xs btn-primary addToSchedule">Add to My Schedule</button>
+                                        {{/unless}}
+                                        {{#if session.isRegistered}}
+                                            <button button ng-click="removeFromSchedule(session.sessionId)" 
+                                            ng-if="$root.status.substr(0,8) == 'Approved' && currentToken && session.isRegistered" 
+                                            class="btn btn-xs btn-success removeFromSchedule">Remove from My Schedule</button>
+                                        {{/if}}
+                                    {{/if}}
+                                {{/if}}
 
-                                <span ng-if="session.currentAttendees >= session.maxAttendees && session.room != '' && !session.isRegistered " class="label label-danger">No more places!</span>
+                                <!--<span ng-if="session.currentAttendees >= session.maxAttendees && session.room != '' && !session.isRegistered " class="label label-danger">No more places!</span>-->
                             </p>
 
                             <div ng-if="($root.role=='Admin' || $root.role=='PM') && session.room != ''" tooltip=" {{session.currentAttendees}} attendees, {{session.maxAttendees}} seats">

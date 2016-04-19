@@ -56,6 +56,7 @@ module.exports = function(app) {
     
     app.get('/api/customerEmployees/checkEmail/:email',  require('./api/customerEmployee/customerEmployeeController').checkEmail);
     app.use('/api/customerEmployees', auth.hasRole('admin'), require('./api/customerEmployee/customerEmployeeRoutes'));
+    app.use('/api/sessions', auth.hasRole('admin'), require('./api/session/sessionRoutes'));
     
     app.use('/api/menus', auth.hasRole('admin'), require('./api/menu/menuRoutes'));
     app.use('/api/orders', require('./api/order/orderRoutes'));
@@ -86,7 +87,8 @@ module.exports = function(app) {
     
     app.get('/changePassword', auth.isAuthenticated(), function(req,res){res.render('user/changePassword', {user: req.user});});
     app.get('/todaysMenu', require('./views/menu/menuController').renderTodaysMenu);  
-    app.get('/nextMenus', require('./views/menu/menuController').renderNextMenus);     
+    app.get('/nextMenus', require('./views/menu/menuController').renderNextMenus);
+    app.get('/agenda', require('./views/agenda/agendaController').renderAgenda);     
 
     
     // client-side views

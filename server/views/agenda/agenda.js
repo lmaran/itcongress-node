@@ -18,7 +18,7 @@
     
     function addToSchedule(event){
         event.preventDefault();
-        alert('in curand');  
+        alert('in curand (21.04)');  
     }
     
     function saveUser(){

@@ -46,6 +46,7 @@ app.controller('sessionController', ['$scope', '$route', 'sessionService', '$loc
     ]; 
     
     $scope.brands = [
+        {name: 'ADVANTECH'},
         {name: 'DELL'},
         {name: 'CISCO'},
         {name: 'MICROSOFT'},
@@ -58,7 +59,8 @@ app.controller('sessionController', ['$scope', '$route', 'sessionService', '$loc
         {name: 'HIKVISION'},
         {name: 'VMWARE'},
         {name: 'PALO ALTO'},
-        {name: 'HP'}
+        {name: 'HP'},
+        {name: 'EXCEL NETWORKING'},
     ];       
     
     $scope.session = {};

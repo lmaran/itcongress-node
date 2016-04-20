@@ -17,7 +17,7 @@
     <form ng-submit="isEditMode ? update(form) : create(form)" name="form" class="form-horizontal max-width" role="form" autocomplete="off" novalidate>
 
         <div class="form-group" ng-class="{'has-error' : form.timeSlot.$invalid}">
-            <label class="col-md-2 control-label required">timeSlot </label>
+            <label class="col-md-2 control-label">timeSlot </label>
             <!--<div class="col-md-4">
                 <input type="text" name="timeSlot" ng-model="session.timeSlot" class="form-control" lm-focus="isFocusOntimeSlot"/>                
                 <p ng-show="form.timeSlot.$error.myValidation" class="help-block">{{errors.timeSlot}}</p>
@@ -44,7 +44,7 @@
         </div>
 
         <div class="form-group" ng-class="{'has-error' : form.room.$invalid}">
-            <label class="col-md-2 control-label required">room </label>
+            <label class="col-md-2 control-label">room </label>
             <div class="col-md-4">
                 <!--<input type="text" name="room" ng-model="session.room" class="form-control" lm-focus="isFocusOnroom"/>-->
                 <select name="room" ng-model="session.room" ng-options="room.id as room.name for room in rooms" class="form-control"></select>                

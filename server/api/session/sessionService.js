@@ -67,7 +67,7 @@
                         
                         // add a flag to see if user is registered or not
                         _.forEach(docs, function(session){
-                            session.isRegistered = attendee.registeredSessions.indexOf(session._id.toString()) != -1;
+                            session.isRegistered = attendee && attendee.registeredSessions && attendee.registeredSessions.indexOf(session._id.toString()) != -1;
                         });   
                         // console.log(docs);
                         return next(null, docs);                                              

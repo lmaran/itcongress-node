@@ -3,6 +3,7 @@
 (function (attendeeService) {
     
     var mongoService = require('../../data/mongoService');
+    var mongoHelper = require('../../data/mongoHelper');
     var collection = 'attendees';
  
  
@@ -35,6 +36,16 @@
     // ---------- RPC ----------    
     attendeeService.getByValue = function (field, value, id, next) {
         mongoService.getByValue(collection, field, value, id, next);
-    };      
+    };   
+    
+    attendeeService.saveMyAction = function (email, action, next) {
+        mongoHelper.getDb(function (err, db) {
+            if(action.type === "addToSchedule") {
+                db.collection(collection).findOneAndUpdate({email:email}, { $addToSet: { registeredSessions: action.sessionId } }, {upsert:true}, next);
+            } else { // removeFromSchedule
+                db.collection(collection).findOneAndUpdate({email:email}, { $pull: { registeredSessions: action.sessionId } }, next);
+            }            
+        })
+    };        
     
 })(module.exports);

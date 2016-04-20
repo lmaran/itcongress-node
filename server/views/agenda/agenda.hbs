@@ -6,7 +6,7 @@
 
         <ul class="media-list">
             {{#each sessions as |session sessionIndex|}}
-                <li>
+                <li data-sessionid="{{session._id}}">
                     <div class="row">
                         <div class="col-lg-2">
                             <h4 style="margin-top:0"><span class="label label-default">
@@ -26,14 +26,27 @@
                             <p>
                                 {{#if ../isAuthenticated}}
                                     {{#if session.isRealEvent}}
-                                        {{#unless session.isRegistered}}
-                                            <button ng-click="addToSchedule(session.sessionId, session.day, session.time)" 
-                                            class="btn btn-xs btn-primary addToSchedule">Add to My Schedule</button>
+                                        {{#unless session.isRegistered}} 
+                                            {{!--<button type="button" class="btn btn-default btn-sm addToSchedule" style="color:#337ab7">
+                                                <span class="glyphicon glyphicon-pushpin" style="color:#337ab7"></span> 
+                                                Add to My Schedule
+                                            </button>--}}
+                                            
+                                            <button class="btn btn-xs btn-primary addToSchedule">
+                                                Add to My Schedule
+                                            </button>
+                                                                   
                                         {{/unless}}
                                         {{#if session.isRegistered}}
-                                            <button button ng-click="removeFromSchedule(session.sessionId)" 
-                                            ng-if="$root.status.substr(0,8) == 'Approved' && currentToken && session.isRegistered" 
-                                            class="btn btn-xs btn-success removeFromSchedule">Remove from My Schedule</button>
+                                            {{!--<button type="button" class="btn btn-default btn-sm removeFromSchedule" style="color:#337ab7">
+                                                <span class="glyphicon glyphicon-pushpin" style="color:#337ab7"></span> 
+                                                Remove from My Schedule
+                                            </button>--}}
+                                            
+                                            <button class="btn btn-xs btn-success removeFromSchedule">
+                                                Remove from My Schedule
+                                            </button>                                        
+                                            
                                         {{/if}}
                                     {{/if}}
                                 {{/if}}

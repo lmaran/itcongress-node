@@ -17,6 +17,9 @@
     });
     
     function addToSchedule(event){
+        alert('in curand');
+        return false;
+        
         var $thisButton = $(this);
         
         var $parentSessionLi = $thisButton.closest("li");  
@@ -32,6 +35,9 @@
     }
     
     function removeFromSchedule(event){
+        alert('in curand');
+        return false;
+        
         var $thisButton = $(this);
         
         var $parentSessionLi = $thisButton.closest("li");  

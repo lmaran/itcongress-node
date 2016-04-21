@@ -17,8 +17,8 @@
     });
     
     function addToSchedule(event){
-        alert('in curand');
-        return false;
+        // alert('in curand');
+        // return false;
         
         var $thisButton = $(this);
         
@@ -35,8 +35,8 @@
     }
     
     function removeFromSchedule(event){
-        alert('in curand');
-        return false;
+        // alert('in curand');
+        // return false;
         
         var $thisButton = $(this);
         

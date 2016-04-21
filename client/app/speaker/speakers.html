@@ -7,7 +7,7 @@
         </button>
         <a href="/admin"><span class="glyphicon glyphicon-home"></span></a>
     </li>
-    <li class="active">Agenda</li>
+    <li class="active">Speakers</li>
 </ol>
 
 <div class="container-fluid">
@@ -44,27 +44,23 @@
         <table class="table table-responsive table-hover table-condensed">
             <thead>
                 <tr>
-                    <th>Time slot</th>
-                    <th>Room</th>
-                    <th>Brand</th>
+                    <th>Name</th>
                     <th>Title</th>
-                    <th>Max</th>
-                    <th>Crt</th>
+                    <th>Bio</th>
+                    <th>PictureUrl</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr data-ng-repeat="session in sessions | filter: search">
+                <tr data-ng-repeat="speaker in speakers | filter: search">
                     <td>
-                        <a ng-href="/admin/sessions/{{session._id}}">{{session.timeSlot}}</a>
+                        <a ng-href="/admin/speakers/{{speaker._id}}">{{speaker.name}}</a>
                     </td>
-                    <td>{{session.room}}</td>
-                    <td>{{session.brand}}</td>
-                    <td>{{session.title}}</td>
-                    <td>{{session.maxAttendees}}</td>
-                    <td>{{session.currentAttendees}}</td>
+                    <td>{{speaker.title}}</td>
+                    <td>{{speaker.bio}}</td>
+                    <td>{{speaker.pictureUrl}}</td>
                     <td>
-                        <a href ng-click="delete(session)">sterge</a>
+                        <a href ng-click="delete(speaker)">sterge</a>
                     </td>
                 </tr>
             </tbody>
@@ -72,6 +68,4 @@
         
     </div>
     
-    <span class="label label-default" style="font-size:100%; font-weight:normal">Total:</span> {{results.length}} / {{sessions.length}}
-
 </div>

@@ -87,9 +87,12 @@ exports.saveMyAction = function(req, res){
     
     attendeeService.saveMyAction(req.user.email, myAction, function (err, data) {
         if(err) { return handleError(res, err); }
-
-        res.sendStatus(200);      
-            
+        
+        // increment/decrement currentAttendees
+        attendeeService.incrementAttendees(myAction, function (err, data) {
+            if(err) { return handleError(res, err); }
+            res.sendStatus(200);           
+        });           
     });         
 
 };

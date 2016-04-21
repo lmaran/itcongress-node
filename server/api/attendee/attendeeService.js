@@ -46,6 +46,14 @@
                 db.collection(collection).findOneAndUpdate({email:email}, { $pull: { registeredSessions: action.sessionId } }, next);
             }            
         })
-    };        
+    };
+    
+    attendeeService.incrementAttendees = function (action, next) {
+        var incValue = action.type === "addToSchedule" ? 1 : -1; // -1 is for decrement
+        mongoHelper.getDb(function (err, db) {
+            var id = mongoHelper.normalizedId(action.sessionId);
+            db.collection('sessions').findOneAndUpdate({_id: id}, { $inc: { currentAttendees: incValue}}, next);          
+        })
+    };             
     
 })(module.exports);

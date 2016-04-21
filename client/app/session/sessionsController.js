@@ -38,6 +38,11 @@ app.controller('sessionsController', ['$scope', '$location', 'sessionService', '
 
     function init() {
         sessionService.getAll().then(function (data) {
+            
+            data.forEach(function(session){
+                session.maxAttendees = getMaxAttendees(session.room);
+            });
+            
             $scope.sessions = data;
         })
         .catch(function (err) {
@@ -47,18 +52,19 @@ app.controller('sessionsController', ['$scope', '$location', 'sessionService', '
         });
     }
     
-    $scope.mySearch = function (item) {
-        var isMatch = false;
-        if ($scope.search) {
-            // search by employeeName or badge
-            if (new RegExp($scope.search, 'i').test(item.email)) {
-                isMatch = true;
-            }
-        } else {
-            // if nothing is entered, return all posts
-            isMatch = true;
+    function getMaxAttendees(room) {
+        switch (room) {
+            case "room1":
+                return 230;
+            case "room2":
+                return 230;
+            case "room3":
+                return 80;
+            case "room4":
+                return 80;
+            default:
+                return '';
         }
-        return isMatch;
-    };
+    };    
 
 }]);

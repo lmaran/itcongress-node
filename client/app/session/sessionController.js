@@ -49,6 +49,7 @@ app.controller('sessionController', ['$scope', '$route', 'sessionService', '$loc
         {name: 'ADVANTECH'},
         {name: 'DELL'},
         {name: 'CISCO'},
+        {name: 'CITRIX'},
         {name: 'MICROSOFT'},
         {name: 'VEEAM'},
         {name: 'SAMSUNG'},
@@ -61,6 +62,7 @@ app.controller('sessionController', ['$scope', '$route', 'sessionService', '$loc
         {name: 'PALO ALTO'},
         {name: 'HP'},
         {name: 'EXCEL NETWORKING'},
+        {name: 'ELO DIGITAL'},
     ];       
     
     $scope.session = {};

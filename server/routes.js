@@ -45,23 +45,23 @@ module.exports = function(app) {
     // ## test only (end)
     
     // API routes
-    app.get('/api/users/checkEmail/:email',  require('./api/user/userController').checkEmail);    
+    //app.get('/api/users/checkEmail/:email',  require('./api/user/userController').checkEmail);    
     app.use('/api/users',require('./api/user/userRoutes'));
-    app.use('/api/preferences', auth.hasRole('admin'), require('./api/preference/preferenceRoutes'));
+    //app.use('/api/preferences', auth.hasRole('admin'), require('./api/preference/preferenceRoutes'));
     
-    app.post('/api/myActions', auth.hasRole('user'), require('./api/attendee/attendeeController').saveMyAction);
+    app.post('/api/myActions', auth.isAuthenticated(), require('./api/attendee/attendeeController').saveMyAction);
     
     app.use('/api/buildInfo', require('./api/buildInfo/buildInfoRoutes'));   
-    app.use('/api/dishes', auth.hasRole('admin'), require('./api/dish/dishRoutes'));
+    //app.use('/api/dishes', auth.hasRole('admin'), require('./api/dish/dishRoutes'));
     
     app.get('/api/customerEmployees/checkEmail/:email',  require('./api/customerEmployee/customerEmployeeController').checkEmail);
     app.use('/api/customerEmployees', auth.hasRole('admin'), require('./api/customerEmployee/customerEmployeeRoutes'));
-    app.use('/api/sessions', auth.hasRole('admin'), require('./api/session/sessionRoutes'));
+    app.use('/api/sessions', auth.isAuthenticated(), require('./api/session/sessionRoutes'));
     
-    app.use('/api/menus', auth.hasRole('admin'), require('./api/menu/menuRoutes'));
+    //app.use('/api/menus', auth.hasRole('admin'), require('./api/menu/menuRoutes'));
     app.use('/api/orders', require('./api/order/orderRoutes'));
-    app.use('/api/orderLines', auth.hasRole('admin'), require('./api/orderLine/orderLineRoutes'));
-    app.use('/api/deliveries', auth.hasRole('admin'), require('./api/delivery/deliveryRoutes'));
+    //app.use('/api/orderLines', auth.hasRole('admin'), require('./api/orderLine/orderLineRoutes'));
+    //app.use('/api/deliveries', auth.hasRole('admin'), require('./api/delivery/deliveryRoutes'));
 
     
     // RPC routes
@@ -70,9 +70,9 @@ module.exports = function(app) {
     // app.get('/me', auth.isAuthenticated(), require('./api/user/userController').me);
     app.post('/me/changepassword', auth.isAuthenticated(), require('./api/user/userController').changePassword); 
        
-    app.get('/menus/currentWeek/print',  require('./api/menu/menuController').printCurrentWeek);
-    app.get('/menus/nextWeek/print', require('./api/menu/menuController').printNextWeek);
-    app.get('/menus/:id/print', require('./api/menu/menuController').printById);
+    //app.get('/menus/currentWeek/print',  require('./api/menu/menuController').printCurrentWeek);
+    //app.get('/menus/nextWeek/print', require('./api/menu/menuController').printNextWeek);
+    //app.get('/menus/:id/print', require('./api/menu/menuController').printById);
     
     // server-side views
     app.get('/',function(req,res){res.render('home/home', {user: req.user, env:process.env.NODE_ENV});}); 
@@ -86,8 +86,8 @@ module.exports = function(app) {
     app.post('/activate/:id', require('./api/user/userController').saveActivationData); 
     
     app.get('/changePassword', auth.isAuthenticated(), function(req,res){res.render('user/changePassword', {user: req.user});});
-    app.get('/todaysMenu', require('./views/menu/menuController').renderTodaysMenu);  
-    app.get('/nextMenus', require('./views/menu/menuController').renderNextMenus);
+    //app.get('/todaysMenu', require('./views/menu/menuController').renderTodaysMenu);  
+    //app.get('/nextMenus', require('./views/menu/menuController').renderNextMenus);
     app.get('/agenda', require('./views/agenda/agendaController').renderAgenda);     
 
     

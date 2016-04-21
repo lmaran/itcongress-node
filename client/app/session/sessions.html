@@ -48,19 +48,21 @@
                     <th>Room</th>
                     <th>Brand</th>
                     <th>Title</th>
+                    <th>Max</th>
+                    <th>Crt</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr data-ng-repeat="session in sessions 
-                        | filter: mySearch
-                        as results">
+                <tr data-ng-repeat="session in sessions | filter: search">
                     <td>
                         <a ng-href="/admin/sessions/{{session._id}}">{{session.timeSlot}}</a>
                     </td>
                     <td>{{session.room}}</td>
                     <td>{{session.brand}}</td>
                     <td>{{session.title}}</td>
+                    <td>{{session.maxAttendees}}</td>
+                    <td>{{session.currentAttendees}}</td>
                     <td>
                         <a href ng-click="delete(session)">sterge</a>
                     </td>

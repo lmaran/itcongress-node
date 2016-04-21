@@ -57,6 +57,7 @@ module.exports = function(app) {
     app.get('/api/customerEmployees/checkEmail/:email',  require('./api/customerEmployee/customerEmployeeController').checkEmail);
     app.use('/api/customerEmployees', auth.hasRole('admin'), require('./api/customerEmployee/customerEmployeeRoutes'));
     app.use('/api/sessions', auth.isAuthenticated(), require('./api/session/sessionRoutes'));
+    app.use('/api/speakers', auth.isAuthenticated(), require('./api/speaker/speakerRoutes'));
     
     //app.use('/api/menus', auth.hasRole('admin'), require('./api/menu/menuRoutes'));
     app.use('/api/orders', require('./api/order/orderRoutes'));

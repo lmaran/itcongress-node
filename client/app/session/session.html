@@ -63,7 +63,7 @@
         <div class="form-group" ng-class="{'has-error' : form.title.$invalid}">
             <label class="col-md-2 control-label">title </label>
             <div class="col-md-4">
-                <input type="text" name="title" ng-model="session.title" class="form-control" lm-focus="isFocusOntitle"/>                
+                <textarea name="title" rows="3" ng-model="session.title" class="form-control"></textarea>              
                 <p ng-show="form.title.$error.myValidation" class="help-block">{{errors.title}}</p>
             </div>
         </div>               

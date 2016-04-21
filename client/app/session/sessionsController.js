@@ -65,6 +65,6 @@ app.controller('sessionsController', ['$scope', '$location', 'sessionService', '
             default:
                 return '';
         }
-    };    
+    }   
 
 }]);

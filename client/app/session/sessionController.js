@@ -1,10 +1,11 @@
 ﻿/*global app*/
+/* global _ */
 'use strict';
 
-app.controller('sessionController', ['$scope', '$route', 'sessionService', '$location', '$q', 'helperValidator', 
-    function ($scope, $route, sessionService, $location, $q, helperValidator) {
+app.controller('sessionController', ['$scope', '$route', 'sessionService', '$location', '$q', 'helperValidator', 'speakerService',
+    function ($scope, $route, sessionService, $location, $q, helperValidator, speakerService) {
        
-    var promiseToGetsession;        
+    var promiseToGetSession, promiseToGetSpeakers;       
     $scope.isEditMode = $route.current.isEditMode;
     $scope.isFocusOnEmail = $scope.isEditMode ? false : true;
     
@@ -63,27 +64,55 @@ app.controller('sessionController', ['$scope', '$route', 'sessionService', '$loc
         {name: 'HP'},
         {name: 'EXCEL NETWORKING'},
         {name: 'ELO DIGITAL'},
-    ];       
+    ]; 
+    
+    $scope.speakers = [];      
     
     $scope.session = {};
     $scope.errors = {};
    
+   getSpeakers();
     if ($scope.isEditMode) {  
         init(); 
     }
 
+    
     function init() {
-        getsession();          
+        getSession(); 
+        //getSpeakers();
+        
+        // need it only for initial customer selection
+        // http://odetocode.com/blogs/scott/archive/2013/06/19/using-ngoptions-in-angularjs.aspx
+        // it seems that with the last version of Angular, you can use 'track by' to substitute this manual loop:
+        // https://github.com/angular/angular.js/issues/6564 (comment from jeffbcross - 07.10.2014)
+        $q.all([promiseToGetSession, promiseToGetSpeakers])
+            .then(function (result) {
+                if($scope.session.speaker1){
+                    $scope.session.speaker1 = _.find($scope.speakers, {_id: $scope.session.speaker1._id});
+                    console.log($scope.session.speaker1);
+                }
+            }, function (reason) {
+                alert('failure');
+            });                  
     } 
 
-    function getsession() {
-        promiseToGetsession = sessionService.getById($route.current.params.id).then(function (data) {
+    function getSession() {
+        promiseToGetSession = sessionService.getById($route.current.params.id).then(function (data) {
             $scope.session = data;
         })
         .catch(function (err) {
             alert(JSON.stringify(err, null, 4));
         });
-    }        
+    } 
+    
+    function getSpeakers() {
+        promiseToGetSpeakers = speakerService.getAllSummary().then(function (data) {
+            $scope.speakers = data;
+        })
+        .catch(function (err) {
+            alert(JSON.stringify(err, null, 4));
+        });
+    }           
 
     $scope.create = function (form) {  
         // validateForm($scope, form);

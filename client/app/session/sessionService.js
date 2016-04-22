@@ -11,7 +11,7 @@ app.factory('sessionService', ['$http', function ($http) {
         return $http.get(rootUrl + query).then(function (result) {                
             return result.data; // normaly it shoud return an array with 0 or 1 elements
         });
-    };
+    };   
     
     // ---------- REST ----------
     factory.create = function (item) {

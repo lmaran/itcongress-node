@@ -17,26 +17,8 @@
     <form ng-submit="isEditMode ? update(form) : create(form)" name="form" class="form-horizontal max-width" role="form" autocomplete="off" novalidate>
 
         <div class="form-group" ng-class="{'has-error' : form.timeSlot.$invalid}">
-            <label class="col-md-2 control-label">timeSlot </label>
-            <!--<div class="col-md-4">
-                <input type="text" name="timeSlot" ng-model="session.timeSlot" class="form-control" lm-focus="isFocusOntimeSlot"/>                
-                <p ng-show="form.timeSlot.$error.myValidation" class="help-block">{{errors.timeSlot}}</p>
-            </div>-->
-            
+            <label class="col-md-2 control-label">Time Slot </label>
             <div class="col-md-4">
-                
-                <!-- workaround to add the ui-select value to the form - useful for validation
-                     https://github.com/angular-ui/ui-select/issues/850#issuecomment-167680690  -->
-                <!--<input type="text" style="display: none" name="timeSlotName" ng-model="orderLine.timeSlotName"/>
-                
-                <ui-select ng-model="obj.selectedEmployee" autofocus="true" focus-on='SetFocus' on-select="selectEmployee($item, $model)">
-                    <ui-select-match>
-                        <span ng-bind="$select.selected.name"></span>
-                    </ui-select-match>
-                    <ui-select-choices repeat="item in (timeSlots | filter: {name:$select.search}) track by item._id">
-                        <span ng-bind-html="item.name | highlight: $select.search"></span>
-                    </ui-select-choices>
-                </ui-select>                -->
                 <select name="timeSlot" ng-model="session.timeSlot" ng-options="timeSlot.name as timeSlot.name for timeSlot in timeSlotList" class="form-control"></select>
                 <p ng-show="form.timeSlot.$error.myValidation" class="help-block">{{errors.timeSlot}}</p>
             </div>            
@@ -44,16 +26,15 @@
         </div>
 
         <div class="form-group" ng-class="{'has-error' : form.room.$invalid}">
-            <label class="col-md-2 control-label">room </label>
+            <label class="col-md-2 control-label">Room </label>
             <div class="col-md-4">
-                <!--<input type="text" name="room" ng-model="session.room" class="form-control" lm-focus="isFocusOnroom"/>-->
                 <select name="room" ng-model="session.room" ng-options="room.id as room.name for room in rooms" class="form-control"></select>                
                 <p ng-show="form.room.$error.myValidation" class="help-block">{{errors.room}}</p>
             </div>
         </div>
         
         <div class="form-group" ng-class="{'has-error' : form.brandId.$invalid}">
-            <label class="col-md-2 control-label">brand </label>
+            <label class="col-md-2 control-label">Brand </label>
             <div class="col-md-4">
                 <select name="brand" ng-model="session.brand" ng-options="brand.name as brand.name for brand in brands" class="form-control"></select>                
                 <p ng-show="form.brandId.$error.myValidation" class="help-block">{{errors.brandId}}</p>
@@ -61,12 +42,33 @@
         </div> 
         
         <div class="form-group" ng-class="{'has-error' : form.title.$invalid}">
-            <label class="col-md-2 control-label">title </label>
+            <label class="col-md-2 control-label">Title </label>
             <div class="col-md-4">
                 <textarea name="title" rows="3" ng-model="session.title" class="form-control"></textarea>              
                 <p ng-show="form.title.$error.myValidation" class="help-block">{{errors.title}}</p>
             </div>
-        </div>               
+        </div> 
+        
+        <div class="form-group" ng-class="{'has-error' : form.room.$invalid}">
+            <label class="col-md-2 control-label">Speaker 1 </label>
+            <div class="col-md-4">
+                <select name="speaker1" ng-model="session.speaker1" ng-options="s as s.name for s in speakers" class="form-control" >
+                    <option value=""></option>
+                </select>
+                
+                <p ng-show="form.speaker1.$error.myValidation" class="help-block">{{errors.speaker1}}</p>
+            </div>
+        </div>  
+        
+        <div class="form-group" ng-class="{'has-error' : form.room.$invalid}">
+            <label class="col-md-2 control-label">Speaker 2 </label>
+            <div class="col-md-4">
+                <select name="speaker2" ng-model="session.speaker2" ng-options="s as s.name for s in speakers" class="form-control" >
+                    <option value=""></option>
+                </select>                
+                <p ng-show="form.speaker2.$error.myValidation" class="help-block">{{errors.speaker2}}</p>
+            </div>
+        </div>                             
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

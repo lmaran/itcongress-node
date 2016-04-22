@@ -19,7 +19,12 @@
                             {{/if}}
 
                             {{#if session.room}}
-                                <p>{{ session.room }}</p>
+                                <p>
+                                    {{ session.room }}
+                                    {{#if session.speaker1}} | {{/if}}
+                                    <span style="display:inline-block; color:#337ab7;">{{session.speaker1.name}}</span>{{#if session.speaker2}}<span>, </span>
+                                    <span style="display:inline-block; color:#337ab7;">{{session.speaker2.name}}</span> {{/if}}                                   
+                                </p>
                             {{/if}}
                             
                             <p><strong>{{ session.title }}</strong></p>

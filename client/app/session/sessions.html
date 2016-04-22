@@ -48,6 +48,7 @@
                     <th>Room</th>
                     <th>Brand</th>
                     <th>Title</th>
+                    <th>Speakers</th>
                     <th>Max</th>
                     <th>Crt</th>
                     <th></th>
@@ -61,6 +62,9 @@
                     <td>{{session.room}}</td>
                     <td>{{session.brand}}</td>
                     <td>{{session.title}}</td>
+                    <td>{{session.speaker1 && session.speaker1.name}}
+                        <span ng-if="session.speaker2">, {{session.speaker2.name}}</span>
+                    </td>
                     <td>{{session.maxAttendees}}</td>
                     <td>{{session.currentAttendees}}</td>
                     <td>

@@ -45,7 +45,7 @@ module.exports = function(app) {
     // ## test only (end)
     
     // API routes
-    //app.get('/api/users/checkEmail/:email',  require('./api/user/userController').checkEmail);    
+    app.get('/api/users/checkEmail/:email',  require('./api/user/userController').checkEmail);    
     app.use('/api/users',require('./api/user/userRoutes'));
     //app.use('/api/preferences', auth.hasRole('admin'), require('./api/preference/preferenceRoutes'));
     

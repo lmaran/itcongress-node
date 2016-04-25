@@ -1,7 +1,6 @@
 ﻿'use strict';
 
 var speakerService = require('./speakerService');
-var preferenceService = require('../preference/preferenceService');
 var config = require('../../config/environment');
 var emailService = require('../../data/emailService');
 var _ = require('lodash'); 

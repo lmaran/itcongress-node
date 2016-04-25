@@ -46,9 +46,7 @@ var all = {
         psw: process.env.ZOHO_PSW
     },           
 
-    rollbarToken: 'c40dd41c292340419923230eed1d0d61',
-    logglyToken: 'ffa32efd-fe1b-4de4-99c2-9c0d6b1f07bc',
-    logglySubdomain: 'lmaran',
+    rollbarToken: '10e9a370c57a4c39ae7f496eeddd1b92',
     roUtcOffset: 2 // stg/prod => userTime=srvTime + 2,  dev => userTime=srvTime
 };
 

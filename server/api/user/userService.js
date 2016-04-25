@@ -60,7 +60,8 @@
         mongoHelper.getDb(function (err, db) {
             if (err) return next(err, null);                      
             //db.collection('users').findOne({ email: email.toLowerCase() }, {salt:0, hashedPassword:0}, next);  // exclude 'salt' and 'psw'
-            db.collection('users').findOne({ email: email.toLowerCase() }, next);  // exclude 'salt' and 'psw'                   
+            //db.collection('users').findOne({ email: email.toLowerCase() }, next);  // exclude 'salt' and 'psw'
+            db.collection('users').findOne({ email: new RegExp(email, 'i') }, next);  // exclude 'salt' and 'psw'; case insensitive                   
         });
     };    
     

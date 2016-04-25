@@ -6,17 +6,40 @@
     // DOM ready
     $(function(){
         // def
-        formEl = $("form");
-        
-        addToScheduleBtns = $(".addToSchedule");
-        removeFromScheduleBtns = $(".removeFromSchedule");            
+        formEl = $("form");        
               
         // events
-        addToScheduleBtns.click(addToSchedule);
-        removeFromScheduleBtns.click(removeFromSchedule);
-    });
+        $(".addToSchedule").click(addToSchedule);
+        $(".removeFromSchedule").click(removeFromSchedule);
+        $('#moreModal').on('show.bs.modal', addContentToMoreModal);
+        $('#speakerModal').on('show.bs.modal', addContentToSpeakerModal);
+    }); 
+    
+    function addContentToMoreModal(event){
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var description = button.data('description'); // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this);
+        modal.find('.modal-body p').text(description);
+    } 
+    
+    function addContentToSpeakerModal(event){
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var name = button.data('name'); // Extract info from data-* attributes
+        var title = button.data('title');
+        var bio = button.data('bio');
+        
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this);
+        modal.find('.modal-title').text(name);
+        modal.find('.modal-body h4').text(title);
+        modal.find('.modal-body p').text(bio);
+    }    
     
     function addToSchedule(event){
+        
         // alert('in curand');
         // return false;
         
@@ -56,31 +79,13 @@
         var url = '/api/myActions';
         $.post(url, action)
             .done(function(data){
-                
-                //document.location.href="/agenda";
                 document.location.reload(true);
-                
-                // // if first time we create a new pref., next we want to use an update instead 
-                // if(!preference.preferenceId){
-                //     // does not change the html5 'data-*' attribute, just the jQuery cache
-                //     // but this is enough for this case: http://stackoverflow.com/a/17246540
-                //     $parentMenuUl.data("preference-id", data._id); 
-                // };
-                
-                // // update DOM
-                // if($isMyOption.length){ // 1 'selected' + 1 'unselected' option => swap
-                //     swapNodes($isMyOption[0], $setMyOption[0]);
-                // } else { // 2 'unselected' options => replace with a new 'selected' button
-                //     var el = '<span class="label label-success isMyOption"><span class="glyphicon glyphicon-ok"></span>Optiunea mea</span>';
-                //     $(el).insertBefore($setMyOption);
-                //     $setMyOption.remove();
-                // } 
             })
             .fail(function(err){
                 alert(err);
             })
             .always(function(err){
-                // $setMyOptionIcon.removeClass("spinning glyphicon-refresh").addClass("glyphicon-pushpin");
+
             });       
     }
     

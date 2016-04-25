@@ -35,20 +35,9 @@ var all = {
                 //safe: true // in Mongo 2.0 this option is 'true' by default and is equals to {w:1} - http://stackoverflow.com/a/14801527
             }
         }
-    },
-    
-    // mailgun: {
-    //     api_key: process.env.MAILGUN_KEY
-    // },
-    
-    zoho: {
-        user: process.env.ZOHO_USER,
-        psw: process.env.ZOHO_PSW
-    },           
+    },         
 
-    rollbarToken: 'c40dd41c292340419923230eed1d0d61',
-    logglyToken: 'ffa32efd-fe1b-4de4-99c2-9c0d6b1f07bc',
-    logglySubdomain: 'lmaran',
+    rollbarToken: '10e9a370c57a4c39ae7f496eeddd1b92',
     roUtcOffset: 2 // stg/prod => userTime=srvTime + 2,  dev => userTime=srvTime
 };
 

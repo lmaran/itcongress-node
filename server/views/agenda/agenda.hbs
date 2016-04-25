@@ -22,12 +22,18 @@
                                 <p>
                                     {{ session.room }}
                                     {{#if session.speaker1}} | {{/if}}
-                                    <span style="display:inline-block; color:#337ab7;">{{session.speaker1.name}}</span>{{#if session.speaker2}}<span>, </span>
-                                    <span style="display:inline-block; color:#337ab7;">{{session.speaker2.name}}</span> {{/if}}                                   
+                                    <a data-name="{{session.speaker1.name}}" data-title="{{session.speaker1.title}}" data-bio="{{session.speaker1.bio}}" href="" data-toggle="modal" data-target="#speakerModal">{{session.speaker1.name}}</a>{{#if session.speaker2}}<span>, </span>
+                                    <a data-name="{{session.speaker2.name}}" data-title="{{session.speaker2.title}}" data-bio="{{session.speaker2.bio}}" href="" data-toggle="modal" data-target="#speakerModal">{{session.speaker2.name}}</a>{{/if}}                                   
                                 </p>
                             {{/if}}
                             
-                            <p><strong>{{ session.title }}</strong></p>
+                            <p>
+                                <strong>{{ session.title }}</strong>
+                                {{#if session.description}}
+                                    <strong><a data-description="{{session.description}}" href="" data-toggle="modal" data-target="#moreModal">more...</a></strong>
+                                {{/if}}
+                            </p>                                                        
+                            
                             <p>
                                 {{#if ../isAuthenticated}}
                                     {{#if session.isRealEvent}}
@@ -71,6 +77,46 @@
             {{/each}}
         </ul>    
 </div>
+
+
+<div class="modal" id="moreModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Session details</h4>
+      </div>
+      <div class="modal-body">
+        <p></p>
+      </div>
+      <!--<div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>-->
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div class="modal" id="speakerModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Session details</h4>
+      </div>
+      <div class="modal-body">
+            <h4>Nume test</h3>
+            <p>descriere</p>
+      </div>
+      <!--<div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>-->
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 
 {{#section 'script'}}
     <script src="/views/agenda/agenda.js"></script>

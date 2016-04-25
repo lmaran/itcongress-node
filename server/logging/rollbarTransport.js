@@ -19,12 +19,15 @@ var RollbarLogger = winston.transports.RollbarLogger = function (options) {
 util.inherits(RollbarLogger, winston.Transport);
 
 RollbarLogger.prototype.log = function (level, msg, meta, callback) {
-
+    
     //if (['warn','error'].indexOf(level) > -1 && (msg instanceof Error || meta instanceof Error)) {
 
     if(level === 'error'){
         rollbar.handleError(meta.err, meta.req);       
-    } else {                    
+    } else {    
+        
+        if(level === 'warn') level = 'warning'; // fix
+                        
         if(meta.res && meta.req){ // http request handler
             var newMsg = meta.res.statusCode + ' ' + meta.req.method + ' ' + meta.req.url + ', ' + meta.res.responseTime + 'ms';
             if(meta.req.user && meta.req.user.username){

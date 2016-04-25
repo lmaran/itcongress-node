@@ -5,7 +5,7 @@ var winston = require('winston');
 var config = require('../config/environment');
 var chalk = require('chalk');
 require('./rollbarTransport'); // init Rollbar transport for Winston
-require('winston-loggly'); // init Loggly transport for Winston
+//require('winston-loggly'); // init Loggly transport for Winston
 
 var logger = new winston.Logger();
 var scrubFields = ['password', 'oldPassword', 'newPassword', 'hashedPassword', 'salt']
@@ -24,12 +24,12 @@ if (config.env === 'production' || config.env === 'staging') {
         }
     }); 
     
-    logger.add(winston.transports.Loggly, {
-        token: config.logglyToken,
-        subdomain: config.logglySubdomain,
-        tags: [config.env],
-        json:true
-    });     
+    // logger.add(winston.transports.Loggly, {
+    //     token: config.logglyToken,
+    //     subdomain: config.logglySubdomain,
+    //     tags: [config.env],
+    //     json:true
+    // });     
 } else { // development
     logger.add(winston.transports.Console, {
         level: 'debug', // catches all messages           

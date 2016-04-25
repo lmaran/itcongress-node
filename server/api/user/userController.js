@@ -56,25 +56,6 @@ exports.create = function (req, res, next) {
             userService.create(user, function (err, response) {
                 if(err) { return handleError(res, err); }
                 res.status(201).json(response.ops[0]);
-                
-                // // send an email with an activationLink
-                // var from = user.email;
-                // var subject = 'Activare cont';
-                
-                // var tpl = '';
-                //     tpl += '<p style="margin-bottom:30px;">Buna <strong>' + user.name + '</strong>,</p>';
-                //     tpl += user.createdBy + ' ti-a creat un cont de acces in aplicatie. ';
-                //     tpl += 'Pentru activarea acestuia, te rog sa folosesti link-ul de mai jos:';
-                //     tpl += '<p><a href="' + config.externalUrl + '/activate/' + user._id + '?activationToken=' + user.activationToken + '">Activare cont</a></p>';
-                //     tpl += '<p style="margin-top:30px">Acest email a fost generat automat.</p>';
-        
-                //     emailService.sendEmail(from, subject, tpl).then(function (result) {
-                //         console.log(result);
-                //         //res.status(201).json(response.ops[0]);
-                //     }, function (err) {
-                //         console.log(err);
-                //         //handleError(res, err)
-                //     });
             });
             
         }

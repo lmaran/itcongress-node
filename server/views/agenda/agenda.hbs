@@ -22,8 +22,8 @@
                                 <p>
                                     {{ session.room }}
                                     {{#if session.speaker1}} | {{/if}}
-                                    <a data-name="{{session.speaker1.name}}" data-title="{{session.speaker1.title}}" data-bio="{{session.speaker1.bio}}" href="" data-toggle="modal" data-target="#speakerModal">{{session.speaker1.name}}</a>{{#if session.speaker2}}<span>, </span>
-                                    <a data-name="{{session.speaker2.name}}" data-title="{{session.speaker2.title}}" data-bio="{{session.speaker2.bio}}" href="" data-toggle="modal" data-target="#speakerModal">{{session.speaker2.name}}</a>{{/if}}                                   
+                                    <a data-name="{{session.speaker1.name}}" data-speakerid="{{session.speaker1._id}}" href="" data-toggle="modal" data-target="#speakerModal">{{session.speaker1.name}}</a>{{#if session.speaker2}}<span>, </span>
+                                    <a data-name="{{session.speaker2.name}}" data-speakerid="{{session.speaker2._id}}" href="" data-toggle="modal" data-target="#speakerModal">{{session.speaker2.name}}</a>{{/if}}                                   
                                 </p>
                             {{/if}}
                             

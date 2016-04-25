@@ -49,6 +49,14 @@
             </div>
         </div> 
         
+        <div class="form-group" ng-class="{'has-error' : form.description.$invalid}">
+            <label class="col-md-2 control-label">Description </label>
+            <div class="col-md-4">
+                <textarea name="description" rows="3" ng-model="session.description" class="form-control"></textarea>              
+                <p ng-show="form.description.$error.myValidation" class="help-block">{{errors.description}}</p>
+            </div>
+        </div>        
+        
         <div class="form-group" ng-class="{'has-error' : form.room.$invalid}">
             <label class="col-md-2 control-label">Speaker 1 </label>
             <div class="col-md-4">

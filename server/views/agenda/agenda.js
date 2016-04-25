@@ -11,17 +11,32 @@
         // events
         $(".addToSchedule").click(addToSchedule);
         $(".removeFromSchedule").click(removeFromSchedule);
-        $('#moreModal').on('show.bs.modal', addContentToModal);
+        $('#moreModal').on('show.bs.modal', addContentToMoreModal);
+        $('#speakerModal').on('show.bs.modal', addContentToSpeakerModal);
     }); 
     
-    function addContentToModal(event){
+    function addContentToMoreModal(event){
         var button = $(event.relatedTarget); // Button that triggered the modal
-        var data = button.data('description'); // Extract info from data-* attributes
+        var description = button.data('description'); // Extract info from data-* attributes
         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this);
-        modal.find('.modal-body p').text(data);
+        modal.find('.modal-body p').text(description);
     } 
+    
+    function addContentToSpeakerModal(event){
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var name = button.data('name'); // Extract info from data-* attributes
+        var title = button.data('title');
+        var bio = button.data('bio');
+        
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this);
+        modal.find('.modal-title').text(name);
+        modal.find('.modal-body h4').text(title);
+        modal.find('.modal-body p').text(bio);
+    }    
     
     function addToSchedule(event){
         

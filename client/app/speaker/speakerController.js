@@ -139,7 +139,7 @@ app.controller('speakerController', ['$scope', '$route', 'speakerService', '$loc
             url: 'api/speakers/upload',
             data: {
                 file: file, 
-                "Content-Type": file.type != '' ? file.type : 'application/octet-stream',
+                "Content-Type": file.type !== '' ? file.type : 'application/octet-stream',
                 'username': '$scope.username'
             }
         }).then(function (resp) {

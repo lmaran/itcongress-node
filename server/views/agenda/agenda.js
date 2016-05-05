@@ -38,13 +38,15 @@
 
         // reset values
         modal.find('.modal-body h4').text("");
-        modal.find('.modal-body p').text("");
+        modal.find('.modal-body span').text("");
+        modal.find('.modal-body img').attr('src', "");
                         
         var url = '/api/speakers/' + speakerId;
         $.get(url)
             .done(function(speaker){
                 modal.find('.modal-body h4').text(speaker.title);
-                modal.find('.modal-body p').text(speaker.bio);
+                modal.find('.modal-body span').text(speaker.bio);
+                modal.find('.modal-body img').attr('src', speaker.imageUrl);
             })        
         
 

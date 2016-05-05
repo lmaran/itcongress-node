@@ -44,21 +44,25 @@
         <table class="table table-responsive table-hover table-condensed">
             <thead>
                 <tr>
+                    <th>Picture</th>
                     <th>Name</th>
                     <th>Title</th>
                     <th>Bio</th>
-                    <th>PictureUrl</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr data-ng-repeat="speaker in speakers | filter: search">
                     <td>
+                        <div class="media">
+                            <img ng-if="speaker.imageUrl" ng-src="{{speaker.imageUrl}}"  style="width:140px">
+                        </div>                        
+                    </td>
+                    <td>
                         <a ng-href="/admin/speakers/{{speaker._id}}">{{speaker.name}}</a>
                     </td>
                     <td>{{speaker.title}}</td>
                     <td>{{speaker.bio}}</td>
-                    <td>{{speaker.pictureUrl}}</td>
                     <td>
                         <a href ng-click="delete(speaker)">sterge</a>
                     </td>

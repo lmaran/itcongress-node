@@ -64,6 +64,9 @@ exports.remove = function(req, res){
 // ---------- RPC ----------
 
 exports.uploadImage = function(req, res){
+    
+    var speakersBaseURI = "http://" + config.azureStorage.account + ".blob.core.windows.net/speakers/";
+    
     // https://github.com/andrewrk/node-multiparty/blob/master/examples/azureblobstorage.js
     var blobService = azure.createBlobService(config.azureStorage.account, config.azureStorage.key);   
     var form = new multiparty.Form();
@@ -78,22 +81,29 @@ exports.uploadImage = function(req, res){
         console.log(part.headers);
         
         var options = {
-            contentType: part.headers['content-type'],
-            metadata: { fileName: 'newName' }
+            contentSettings:{contentType: part.headers['content-type']}
         };
         
         console.log(options);
 
-        blobService.createBlockBlobFromStream(containerName, blobName, part, size, options, function(error) {
-            if (error) {
+        blobService.createBlockBlobFromStream(containerName, blobName, part, size, options, function(err, result, response) {
+            if (err) {
                 // error handling
+                // console.log(error);
+                handleError(res, err)
+            }
+            else{
+                // console.log(result);
+                // console.log(response);
+                
+                res.json({url:speakersBaseURI + blobName});
             }
         });
     });
 
     form.parse(req);    
     
-    res.json({ok:'ok'});             
+    //res.json({ok:'ok'});             
 };
 
 // ---------- Helpers ----------

@@ -138,21 +138,27 @@ app.controller('speakerController', ['$scope', '$route', 'speakerService', '$loc
         Upload.upload({
             url: 'api/speakers/upload',
             data: {
-                file: file, 
-                "Content-Type": file.type !== '' ? file.type : 'application/octet-stream',
-                'username': '$scope.username'
+                file: file
             }
         }).then(function (resp) {
             // file is uploaded successfully
-            console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+            // console.log('Success ' + resp.config.data.file.name + ' uploaded. Response: ' + resp.data);
+            // console.log(resp);
+            
+            $scope.speaker.imageUrl = resp.data.url;
+            
         }, function (resp) {
             // handle error
-            console.log('Error status: ' + resp.status);
+            // console.log('Error status: ' + resp.status);
         }, function (evt) {
             // progress notify
-            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+            // var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            // console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
         });
     };        
+
+    $scope.removeImage = function(){
+        $scope.speaker.imageUrl = "";
+    }
 
 }]);

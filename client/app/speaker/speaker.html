@@ -17,7 +17,7 @@
     <form ng-submit="isEditMode ? update(form) : create(form)" name="form" class="form-horizontal max-width" role="form" autocomplete="off" novalidate>
 
         <div class="form-group" ng-class="{'has-error' : form.name.$invalid}">
-            <label class="col-md-2 control-label">name </label>
+            <label class="col-md-2 control-label">Name </label>
 
             <div class="col-md-4">
                 <input type="text" name="name" ng-model="speaker.name" class="form-control"/>
@@ -27,7 +27,7 @@
         </div>
 
         <div class="form-group" ng-class="{'has-error' : form.title.$invalid}">
-            <label class="col-md-2 control-label">title </label>
+            <label class="col-md-2 control-label">Title </label>
             <div class="col-md-4">
                 <input type="text" name="title" ng-model="speaker.title" class="form-control"/>             
                 <p ng-show="form.title.$error.myValidation" class="help-block">{{errors.title}}</p>
@@ -35,37 +35,33 @@
         </div>
         
         <div class="form-group" ng-class="{'has-error' : form.bio.$invalid}">
-            <label class="col-md-2 control-label">bio </label>
+            <label class="col-md-2 control-label">Bio </label>
             <div class="col-md-4">
                 <textarea name="bio" rows="7" ng-model="speaker.bio" class="form-control"></textarea>              
                 <p ng-show="form.bio.$error.myValidation" class="help-block">{{errors.bio}}</p>
             </div>
         </div>
         
-        <!--<div class="form-group" ng-class="{'has-error' : form.image.$invalid}">
-            <label class="col-md-2 control-label">image </label>
+        <div class="form-group" ng-class="{'has-error' : form.imageUrl.$invalid}">
+            <label class="col-md-2 control-label">Image </label>
             <div class="col-md-4">
 
-Upload right away after file selection:
-<div class="button" ngf-select="upload($file)">Upload on file select</div>
-
-Drop File:
-<div ngf-drop="uploadFiles($file)" class="drop-box" ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-pattern="'image/*,application/pdf'">Drop Images or PDFs files here</div>
-<div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
-
-Image thumbnail: <img ngf-thumbnail="file || '/thumb.jpg'">
+                <button class="btn btn-primary  btn-xs" ngf-select="upload($file)" accept="image/*">
+                    <span ng-if="!speaker.imageUrl">Adauga poza</span>
+                    <span ng-if="speaker.imageUrl">Modifica poza</span>
+                </button>
+                <span ng-if="speaker.imageUrl">
+                    | <a href="" ng-click="removeImage()">Sterge poza</a>
+                </span>
+                <div class="media" style2="margin:10px;">
+                    <img ng-if="speaker.imageUrl" ng-src="{{speaker.imageUrl}}" class="img-thumbnail">
+                </div>
+                
+             
             
-                <p ng-show="form.image.$error.myValidation" class="help-block">{{errors.image}}</p>
             </div>
-        </div>        -->
+        </div>        
         
-        <!--<div class="form-group" ng-class="{'has-error' : form.pictureUrl.$invalid}">
-            <label class="col-md-2 control-label">pictureUrl </label>
-            <div class="col-md-4">
-                <input type="text" name="pictureUrl" ng-model="speaker.pictureUrl" class="form-control"/>                
-                <p ng-show="form.pictureUrl.$error.myValidation" class="help-block">{{errors.pictureUrl}}</p>
-            </div>
-        </div>                        -->
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

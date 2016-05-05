@@ -10,6 +10,9 @@ router.get('/\\$count', controller.getAll);
 
 // ---------- REST ----------
 router.post('/', controller.create);
+
+router.post('/upload', controller.uploadImage);
+
 router.get('/:id', controller.getById);
 router.put('/', controller.update);
 router.delete('/:id', controller.remove);

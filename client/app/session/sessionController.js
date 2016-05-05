@@ -90,7 +90,7 @@ app.controller('sessionController', ['$scope', '$route', 'sessionService', '$loc
                 if($scope.session.speaker1){
                     $scope.session.speaker1 = _.find($scope.speakers, {_id: $scope.session.speaker1._id});
                     //console.log($scope.session.speaker1);
-                };
+                }
                 if($scope.session.speaker2){
                     $scope.session.speaker2 = _.find($scope.speakers, {_id: $scope.session.speaker2._id});
                     console.log($scope.session.speaker1);

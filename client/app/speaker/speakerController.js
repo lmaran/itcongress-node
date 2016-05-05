@@ -1,8 +1,8 @@
 ﻿/*global app*/
 'use strict';
 
-app.controller('speakerController', ['$scope', '$route', 'speakerService', '$location', '$q', 'helperValidator', 
-    function ($scope, $route, speakerService, $location, $q, helperValidator) {
+app.controller('speakerController', ['$scope', '$route', 'speakerService', '$location', '$q', 'helperValidator', 'Upload',
+    function ($scope, $route, speakerService, $location, $q, helperValidator, Upload) {
        
     var promiseToGetspeaker;        
     $scope.isEditMode = $route.current.isEditMode;
@@ -130,6 +130,29 @@ app.controller('speakerController', ['$scope', '$route', 'speakerService', '$loc
     //     // fields
     //     //helperValidator.required50($scope, form, entity, 'name');
     //     helperValidator.requiredEmail($scope, form, entity, 'email');
-    // }     
+    // } 
+    
+    // upload on file select or drop
+    // https://github.com/danialfarid/ng-file-upload#-usage
+    $scope.upload = function (file) {
+        Upload.upload({
+            url: 'api/speakers/upload',
+            data: {
+                file: file, 
+                "Content-Type": file.type != '' ? file.type : 'application/octet-stream',
+                'username': '$scope.username'
+            }
+        }).then(function (resp) {
+            // file is uploaded successfully
+            console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+        }, function (resp) {
+            // handle error
+            console.log('Error status: ' + resp.status);
+        }, function (evt) {
+            // progress notify
+            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+        });
+    };        
 
 }]);

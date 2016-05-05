@@ -10,6 +10,6 @@ module.exports = {
     gaCode: 'UA-72165579-2',
     azureStorage: {
         account: process.env.AZURE_STORAGE_ACCOUNT,
-        key: process.env.KEY
+        key: process.env.AZURE_STORAGE_ACCESS_KEY
     }    
 };

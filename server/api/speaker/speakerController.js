@@ -4,6 +4,8 @@ var speakerService = require('./speakerService');
 var config = require('../../config/environment');
 var emailService = require('../../data/emailService');
 var _ = require('lodash'); 
+var azure = require('azure-storage');
+var multiparty = require('multiparty');
 
 
 // ---------- OData ----------
@@ -59,6 +61,40 @@ exports.remove = function(req, res){
     });
 };
 
+// ---------- RPC ----------
+
+exports.uploadImage = function(req, res){
+    // https://github.com/andrewrk/node-multiparty/blob/master/examples/azureblobstorage.js
+    var blobService = azure.createBlobService(config.azureStorage.account, config.azureStorage.key);   
+    var form = new multiparty.Form();
+
+    form.on('part', function(part) {
+        if (!part.filename) return;
+
+        var size = part.byteCount;
+        var blobName = part.filename;
+        var containerName = 'speakers';
+        
+        console.log(part.headers);
+        
+        var options = {
+            contentType: part.headers['content-type'],
+            metadata: { fileName: 'newName' }
+        };
+        
+        console.log(options);
+
+        blobService.createBlockBlobFromStream(containerName, blobName, part, size, options, function(error) {
+            if (error) {
+                // error handling
+            }
+        });
+    });
+
+    form.parse(req);    
+    
+    res.json({ok:'ok'});             
+};
 
 // ---------- Helpers ----------
 function handleError(res, err) {

@@ -19,14 +19,14 @@ var gulp = require('gulp'), // task runner
     del = require('del'), // delete files/folders  
     concat = require('gulp-concat'), // concatenate files    
     uglify = require('gulp-uglify'), // js minification
-    minifyCSS = require('gulp-minify-css'), // css minification
+    cleanCSS = require('gulp-clean-css'), // css minification
     rev = require('gulp-rev'), // add a unique id at the end of app.js (ex: app-f4446a9c.js) to prevent browser caching
     filter = require('gulp-filter'), // filter files in a stream  
     //notify = require('gulp-notify'),  // display a message inside the pipeline  Ex: .pipe(notify('some message'))  
     gutil = require('gulp-util'), // colorful logs and ather stuff
     path = require('path'); // handling file path
     //var debug = require('gulp-debug'); // => display files that run through your pipeline Ex: .pipe(debug())
-    var mocha = require('gulp-mocha');
+    //var mocha = require('gulp-mocha');
     var through = require('through2');
     var ghPages = require('gulp-gh-pages');
     var gnf = require('gulp-npm-files'); // copy only node_modules used in production (not "dev_dependencies")
@@ -68,27 +68,27 @@ gulp.task('prod', function(cb) {
     cb);
 });
 
-gulp.task('test', function(cb) {
-    runSequence(
-        ['test:server'],
-    cb);
-});
+// gulp.task('test', function(cb) {
+//     runSequence(
+//         ['test:server'],
+//     cb);
+// });
 
 
 // 1. development task definitions ============================================================
 
-gulp.task('test:server', function () {
-    return gulp.src('./server/**/*.spec.js', {read: false})
-        .pipe(mocha({
-            //reporter: 'spec'
-        }))
-        .once('error', function () {
-            process.exit(1);
-        })
-        .once('end', function () {
-            process.exit();
-        });
-});
+// gulp.task('test:server', function () {
+//     return gulp.src('./server/**/*.spec.js', {read: false})
+//         .pipe(mocha({
+//             //reporter: 'spec'
+//         }))
+//         .once('error', function () {
+//             process.exit(1);
+//         })
+//         .once('end', function () {
+//             process.exit();
+//         });
+// });
 
 
 gulp.task('clean-css', function (cb) {
@@ -293,7 +293,7 @@ gulp.task('build-scripts-bower', function() {
 gulp.task('build-styles',function() {
     return gulp.src('./client/app/**/*.css')
         .pipe(concat('app.css'))
-        .pipe(minifyCSS())
+        .pipe(cleanCSS())
         .pipe(rev())
         .pipe(gulp.dest('./dist/client/app'));
 });
@@ -302,7 +302,7 @@ gulp.task('build-styles-bower', function() {
     return gulp.src(bowerFiles())
         .pipe(filter(['*.css', '!bootstrap-sass-official', '!json3',  '!es5-shim']))
         .pipe(concat('vendor.css'))
-        .pipe(minifyCSS())
+        .pipe(cleanCSS())
         .pipe(rev())
         .pipe(gulp.dest('./dist/client/app'));
 });
@@ -329,8 +329,10 @@ gulp.task('copy-assets', function() {
 });
 
 gulp.task('copy-node-modules', function() {
-    return gulp.src(gnf(), {base:'./'})
-        .pipe(gulp.dest('./dist'));
+    //return gulp.src(gnf(), {base:'./'})
+    //.pipe(gulp.dest('./dist'));
+    return gulp.src('./node_modules/**/*.*')
+        .pipe(gulp.dest('./dist/node_modules'));
 });
 
 // gulp.task('create-package.json', function() {

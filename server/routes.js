@@ -56,6 +56,7 @@ module.exports = function(app) {
     app.use('/api/customerEmployees', auth.hasRole('admin'), require('./api/customerEmployee/customerEmployeeRoutes'));
     app.use('/api/sessions', auth.hasRole('admin'), require('./api/session/sessionRoutes'));
     app.use('/api/speakers', auth.hasRole('admin'), require('./api/speaker/speakerRoutes'));
+    app.use('/api/brands', auth.hasRole('admin'), require('./api/brand/brandRoutes'));
 
     
     // RPC routes

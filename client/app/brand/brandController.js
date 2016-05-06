@@ -1,11 +1,10 @@
 ﻿/*global app*/
-/* global _ */
 'use strict';
 
-app.controller('sessionController', ['$scope', '$route', 'sessionService', '$location', '$q', 'helperValidator', 'speakerService', 'brandService',
-    function ($scope, $route, sessionService, $location, $q, helperValidator, speakerService, brandService) {
+app.controller('brandController', ['$scope', '$route', 'brandService', '$location', '$q', 'helperValidator', 'Upload',
+    function ($scope, $route, brandService, $location, $q, helperValidator, Upload) {
        
-    var promiseToGetSession, promiseToGetSpeakers, promiseToGetBrands;       
+    var promiseToGetbrand;        
     $scope.isEditMode = $route.current.isEditMode;
     $scope.isFocusOnEmail = $scope.isEditMode ? false : true;
     
@@ -46,76 +45,53 @@ app.controller('sessionController', ['$scope', '$route', 'sessionService', '$loc
         {id: 'expo', name: 'Spatiul Expozitional'}
     ]; 
     
-    $scope.brands = []; 
-    $scope.speakers = [];      
+    $scope.brands = [
+        {name: 'ADVANTECH'},
+        {name: 'DELL'},
+        {name: 'CISCO'},
+        {name: 'CITRIX'},
+        {name: 'MICROSOFT'},
+        {name: 'VEEAM'},
+        {name: 'SAMSUNG'},
+        {name: 'NETAPP'},
+        {name: 'ORACLE'},
+        {name: 'XEROX'},
+        {name: 'FORTINET'},
+        {name: 'HIKVISION'},
+        {name: 'VMWARE'},
+        {name: 'PALO ALTO'},
+        {name: 'HP'},
+        {name: 'EXCEL NETWORKING'},
+        {name: 'ELO DIGITAL'},
+    ];       
     
-    $scope.session = {};
+    $scope.brand = {};
     $scope.errors = {};
    
-    getSpeakers();
-    getBrands();
     if ($scope.isEditMode) {  
         init(); 
     }
 
-    
     function init() {
-        getSession(); 
-        //getSpeakers();
-        
-        // need it only for initial customer selection
-        // http://odetocode.com/blogs/scott/archive/2013/06/19/using-ngoptions-in-angularjs.aspx
-        // it seems that with the last version of Angular, you can use 'track by' to substitute this manual loop:
-        // https://github.com/angular/angular.js/issues/6564 (comment from jeffbcross - 07.10.2014)
-        $q.all([promiseToGetSession, promiseToGetSpeakers])
-            .then(function (result) {
-                if($scope.session.speaker1){
-                    $scope.session.speaker1 = _.find($scope.speakers, {_id: $scope.session.speaker1._id});
-                    //console.log($scope.session.speaker1);
-                }
-                if($scope.session.speaker2){
-                    $scope.session.speaker2 = _.find($scope.speakers, {_id: $scope.session.speaker2._id});
-                    console.log($scope.session.speaker1);
-                }                
-            }, function (reason) {
-                alert('failure');
-            });                  
+        getbrand();          
     } 
 
-    function getSession() {
-        promiseToGetSession = sessionService.getById($route.current.params.id).then(function (data) {
-            $scope.session = data;
+    function getbrand() {
+        promiseToGetbrand = brandService.getById($route.current.params.id).then(function (data) {
+            $scope.brand = data;
         })
         .catch(function (err) {
             alert(JSON.stringify(err, null, 4));
         });
-    } 
-    
-    function getSpeakers() {
-        promiseToGetSpeakers = speakerService.getAllSummary().then(function (data) {
-            $scope.speakers = data;
-        })
-        .catch(function (err) {
-            alert(JSON.stringify(err, null, 4));
-        });
-    } 
-    
-    function getBrands() {
-        promiseToGetBrands = brandService.getAllSummary().then(function (data) {
-            $scope.brands = data;
-        })
-        .catch(function (err) {
-            alert(JSON.stringify(err, null, 4));
-        });
-    }               
+    }        
 
     $scope.create = function (form) {  
         // validateForm($scope, form);
         // if (form.$invalid) return false;
         
-        //console.log($scope.session);
+        //console.log($scope.brand);
         
-        sessionService.create($scope.session)
+        brandService.create($scope.brand)
             .then(function (data) {
                 $scope.goBack(); // it comes from rootScope
             })
@@ -132,9 +108,9 @@ app.controller('sessionController', ['$scope', '$route', 'sessionService', '$loc
         // validateForm($scope, form);
         // if (form.$invalid) return false;
         
-        //console.log($scope.session);
+        //console.log($scope.brand);
             
-        sessionService.update($scope.session)
+        brandService.update($scope.brand)
             .then(function (data) {
                 $scope.goBack(); // it comes from rootScope
             })
@@ -147,13 +123,4 @@ app.controller('sessionController', ['$scope', '$route', 'sessionService', '$loc
             });
     };
     
-    // function validateForm($scope, form){ 
-    //     var entity = 'session'; 
-    //     helperValidator.setAllFildsAsValid(form);
-        
-    //     // fields
-    //     //helperValidator.required50($scope, form, entity, 'name');
-    //     helperValidator.requiredEmail($scope, form, entity, 'email');
-    // }     
-
 }]);

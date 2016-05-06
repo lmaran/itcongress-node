@@ -1,9 +1,10 @@
 ﻿'use strict';
 
-app.controller('sessionsController', ['$scope', '$location', 'sessionService', 'modalService', 
-    function ($scope, $location, sessionService, modalService) {
+app.controller('sessionsController', ['$scope', '$location', 'sessionService', 'modalService', 'brandService',
+    function ($scope, $location, sessionService, modalService, brandService) {
     
     $scope.sessions = [];
+    $scope.brands = [];
     $scope.errors = {};
 
     init();
@@ -50,7 +51,24 @@ app.controller('sessionsController', ['$scope', '$location', 'sessionService', '
                 alert(JSON.stringify(err, null, 4));
             }
         });
+        
+        getBrands();
+        
+        var searchObject = $location.search();
+        if(searchObject.brand)
+            $scope.selectedBrand = searchObject.brand;  
+        else
+            $scope.selectedBrand = 'All Brands';         
     }
+    
+    function getBrands() {
+        brandService.getAllSummary().then(function (data) {
+            $scope.brands = data;
+        })
+        .catch(function (err) {
+            alert(JSON.stringify(err, null, 4));
+        });
+    }     
     
     function getMaxAttendees(room) {
         switch (room) {
@@ -65,6 +83,23 @@ app.controller('sessionsController', ['$scope', '$location', 'sessionService', '
             default:
                 return '';
         }
-    }   
+    }  
+    
+    $scope.filterByBrand = function(session) {
+        if($scope.selectedBrand === 'All Brands')
+            return true;
+        else 
+            return (session.brand === $scope.selectedBrand );
+    };     
+    
+    $scope.selectBrand = function(brandName){
+        if(brandName === 'All Brands'){
+            $scope.selectedBrand = 'All Brands';
+            $location.search('brand', null); // delete property from url
+        } else {
+            $scope.selectedBrand = brandName;
+            $location.search('brand', brandName); // add property to url
+        }
+    }    
 
 }]);

@@ -25,8 +25,35 @@
                 
         <div class="col-md-6">
             <form class="form-inline">
-                <div class="form-group pull-right">                   
+                
+                <div class="form-group pull-right">    
+                    
+                        <span class="btn-group" uib-dropdown>
+                            <button style="text-align:left; min-width:120px;" type="button" class="btn btn-default btn-block" uib-dropdown-toggle ng-disabled="disabled">
+                                <span>{{selectedBrand}}</span> 
+                                <span style="float:right; height:12px; margin-top: 8px;" class="caret"></span>
+                            </button>
+                            <ul class="uib-dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#" ng-click="selectBrand('All Brands')">All Brands</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li ng-repeat="brand in brands">
+                                    <a href="#" ng-click="selectBrand(brand.name)">{{brand.name}}</a>
+                                </li>
+                            </ul>                    
+                        </span> 
+                                   
                     <div class="input-group">
+                        
+                        <!--<select class="form-control pull-right" ng-model="selectedBrand" ng-options="brand.name for brand in brands | filter: filterExpression" style="margin-right:10px; border-radius:4px">
+                            <option value="">All Brands</option>
+                        </select>                        -->
+                        
+                        
+                       
+                        
+                        
                         <span style="padding-right:10px;" class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="refresh()" style="border-radius:4px; background-color:lightgray"><span class="glyphicon glyphicon-refresh"></span></button>
                         </span>
@@ -55,7 +82,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr data-ng-repeat="session in sessions | filter: search">
+                <tr data-ng-repeat="session in sessions | filter:filterByBrand | filter: search">
                     <td>
                         <a ng-href="/admin/sessions/{{session._id}}">{{session.timeSlot}}</a>
                     </td>

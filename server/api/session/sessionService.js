@@ -68,6 +68,9 @@
                         // add a flag to see if user is registered or not
                         _.forEach(docs, function(session){
                             session.isRegistered = attendee && attendee.registeredSessions && attendee.registeredSessions.indexOf(session._id.toString()) != -1;
+                            if(session.currentAttendees){
+                                session.noMorePlaces = session.currentAttendees >= getMaxAttendees(session.room);
+                            }  
                         });   
                         // console.log(docs);
                         return next(null, docs);                                              
@@ -78,6 +81,23 @@
                 }              
             });
         });
-    };       
+    };  
+    
+    function getMaxAttendees(roomName) {        
+        var roomObj = _.find(rooms, {name:roomName});       
+        
+        switch (roomObj.id) {
+            case "room1":
+                return 230;
+            case "room2":
+                return 230;
+            case "room3":
+                return 80;
+            case "room4":
+                return 80;
+            default:
+                return 10000;
+        }
+    }          
     
 })(module.exports);

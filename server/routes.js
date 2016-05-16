@@ -71,8 +71,9 @@ module.exports = function(app) {
     // server-side views
     app.get('/',function(req,res){res.render('home/home', {user: req.user, env:process.env.NODE_ENV});}); 
     app.get('/contact', function(req,res){res.render('contact/contact', {user: req.user});});
-    app.get('/login', function(req,res){res.render('user/login');});
-    app.get('/register', function(req,res){res.render('user/register', {lastName: req.query.name, firstName: req.query.surname, company: req.query.company, phone: req.query.phone, email: req.query.mail, companyOwner: req.query.companyOwner, owner: req.query.owner });});
+    app.get('/login', function(req,res){res.render('user/login');});   
+    //app.get('/register', function(req,res){res.render('user/register', {lastName: req.query.name, firstName: req.query.surname, company: req.query.company, phone: req.query.phone, email: req.query.mail, companyOwner: req.query.companyOwner, owner: req.query.owner });});
+    app.get('/register', function(req,res){res.render('user/register-closed', {lastName: req.query.name, firstName: req.query.surname, company: req.query.company, phone: req.query.phone, email: req.query.mail, companyOwner: req.query.companyOwner, owner: req.query.owner });});
     app.get('/registerConfirm', function(req,res){res.render('user/registerConfirm')});  
     app.get('/registerConfirmWait', function(req,res){res.render('user/registerConfirmWait')});   
     

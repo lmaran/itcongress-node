@@ -36,30 +36,37 @@
                             
                             <p>
                                 {{#if ../isAuthenticated}}
-                                    {{#if session.isRealEvent}}
-                                        {{#unless session.isRegistered}} 
-                                            {{!--<button type="button" class="btn btn-default btn-sm addToSchedule" style="color:#337ab7">
-                                                <span class="glyphicon glyphicon-pushpin" style="color:#337ab7"></span> 
-                                                Add to My Schedule
-                                            </button>--}}
-                                            
-                                            <button class="btn btn-xs btn-primary addToSchedule">
-                                                Add to My Schedule
-                                            </button>
-                                                                   
-                                        {{/unless}}
-                                        {{#if session.isRegistered}}
-                                            {{!--<button type="button" class="btn btn-default btn-sm removeFromSchedule" style="color:#337ab7">
-                                                <span class="glyphicon glyphicon-pushpin" style="color:#337ab7"></span> 
-                                                Remove from My Schedule
-                                            </button>--}}
-                                            
-                                            <button class="btn btn-xs btn-success removeFromSchedule">
-                                                Remove from My Schedule
-                                            </button>                                        
-                                            
-                                        {{/if}}
+                                    {{#if session.noMorePlaces}}
+                                        <span class="label label-danger">No more places!</span>
                                     {{/if}}
+                                    
+                                    {{#unless session.noMorePlaces}}
+                                        {{#if session.isRealEvent}}
+                                            {{#unless session.isRegistered}} 
+                                                {{!--<button type="button" class="btn btn-default btn-sm addToSchedule" style="color:#337ab7">
+                                                    <span class="glyphicon glyphicon-pushpin" style="color:#337ab7"></span> 
+                                                    Add to My Schedule
+                                                </button>--}}
+                                                
+                                                <button class="btn btn-xs btn-primary addToSchedule">
+                                                    Add to My Schedule
+                                                </button>
+                                                                    
+                                            {{/unless}}
+                                            {{#if session.isRegistered}}
+                                                {{!--<button type="button" class="btn btn-default btn-sm removeFromSchedule" style="color:#337ab7">
+                                                    <span class="glyphicon glyphicon-pushpin" style="color:#337ab7"></span> 
+                                                    Remove from My Schedule
+                                                </button>--}}
+                                                
+                                                <button class="btn btn-xs btn-success removeFromSchedule">
+                                                    Remove from My Schedule
+                                                </button>                                        
+                                                
+                                            {{/if}}
+                                        {{/if}}                                
+                                    {{/unless}}                                
+           
                                 {{/if}}
 
                                 <!--<span ng-if="session.currentAttendees >= session.maxAttendees && session.room != '' && !session.isRegistered " class="label label-danger">No more places!</span>-->

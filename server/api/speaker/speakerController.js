@@ -64,8 +64,8 @@ exports.remove = function(req, res){
 // ---------- RPC ----------
 
 exports.uploadImage = function(req, res){
-    
-    var speakersBaseURI = "http://" + config.azureStorage.account + ".blob.core.windows.net/speakers/";
+    // todo: do not store the entire url for the picture; use an env variable to keep baseURI 
+    var speakersBaseURI = "https://" + config.azureStorage.account + ".blob.core.windows.net/speakers/";
     
     // https://github.com/andrewrk/node-multiparty/blob/master/examples/azureblobstorage.js
     var blobService = azure.createBlobService(config.azureStorage.account, config.azureStorage.key);   

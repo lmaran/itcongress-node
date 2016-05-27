@@ -27,12 +27,12 @@ module.exports = function(app) {
 
     
     // // RPC routes
-    // app.post('/login/', require('./api/user/login/local/loginLocalController').authenticate);       
+    //app.post('/login/', require('./api/user/login/local/loginLocalController').authenticate);       
     // app.get('/logout', auth.isAuthenticated(), require('./api/user/logout/logoutController').logout);
     // app.post('/me/changepassword', auth.isAuthenticated(), require('./api/user/userController').changePassword); 
     
     // // server-side views
-    // app.get('/',function(req,res){res.render('home/home', {user: req.user, env:process.env.NODE_ENV});}); 
+    app.get('/',function(req,res){res.render('home/home', {user: req.user, env:process.env.NODE_ENV});}); 
     // app.get('/contact', function(req,res){res.render('contact/contact', {user: req.user});});
     app.get('/login', function(req,res){res.render('user/login-closed');});   
     app.get('/register', function(req,res){res.render('user/register-closed', {lastName: req.query.name, firstName: req.query.surname, company: req.query.company, phone: req.query.phone, email: req.query.mail, companyOwner: req.query.companyOwner, owner: req.query.owner });});

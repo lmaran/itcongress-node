@@ -47,9 +47,9 @@ module.exports = function(app) {
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
 
-    app.use(cookieParser()); // Parse Cookie header and populate req.cookies with an object keyed by the cookie names
+    //app.use(cookieParser()); // Parse Cookie header and populate req.cookies with an object keyed by the cookie names
     
-    app.use(passport.initialize());
+    //app.use(passport.initialize());
 
     app.locals.gaCode = config.gaCode; // google Analytics code (e.g. 'UA-72165579-1'); http://stackoverflow.com/a/25097453
 

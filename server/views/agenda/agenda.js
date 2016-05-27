@@ -54,21 +54,21 @@
     
     function addToSchedule(event){
         
-        // alert('in curand');
-        // return false;
+        alert('Session closed!');
+        return false;
         
-        var $thisButton = $(this);
+        // var $thisButton = $(this);
         
-        var $parentSessionLi = $thisButton.closest("li");  
-        var sessionId = $parentSessionLi.data("sessionid");
+        // var $parentSessionLi = $thisButton.closest("li");  
+        // var sessionId = $parentSessionLi.data("sessionid");
 
         
-        var action = {
-            sessionId: sessionId,
-            type: 'addToSchedule'
-        };
+        // var action = {
+        //     sessionId: sessionId,
+        //     type: 'addToSchedule'
+        // };
         
-        saveMyAction(action);
+        // saveMyAction(action);
     }
     
     function removeFromSchedule(event){

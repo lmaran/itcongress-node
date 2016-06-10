@@ -40,6 +40,7 @@
     
     attendeeService.saveMyAction = function (email, action, next) {
         mongoHelper.getDb(function (err, db) {
+            if (err) return next(err, null);
             if(action.type === "addToSchedule") {
                 db.collection(collection).findOneAndUpdate({email:email}, { $addToSet: { registeredSessions: action.sessionId } }, {upsert:true}, next);
             } else { // removeFromSchedule
@@ -51,6 +52,7 @@
     attendeeService.incrementAttendees = function (action, next) {
         var incValue = action.type === "addToSchedule" ? 1 : -1; // -1 is for decrement
         mongoHelper.getDb(function (err, db) {
+            if (err) return next(err, null);
             var id = mongoHelper.normalizedId(action.sessionId);
             db.collection('sessions').findOneAndUpdate({_id: id}, { $inc: { currentAttendees: incValue}}, next);          
         })

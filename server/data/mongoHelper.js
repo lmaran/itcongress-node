@@ -12,7 +12,10 @@
             mongodb.MongoClient.connect(config.mongo.uri, config.mongo.options, function(err, db) {
                 if (err) {
                     next(err, null);
+                    // console.log(err);
+                    // process.exit(1);                    
                 } else {
+                    theDb = db;                    
                     next(null, db);
                 }
             });
